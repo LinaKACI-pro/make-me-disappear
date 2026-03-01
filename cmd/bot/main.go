@@ -43,6 +43,7 @@ func main() {
 		newInboxReviewCmd(),
 		newDashboardCmd(),
 		newIMAPCheckCmd(),
+		newPurgeBouncedCmd(),
 	)
 
 	if err := rootCmd.Execute(); err != nil {
@@ -134,9 +135,7 @@ func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 
 	// Run once immediately on start.
 	checkAndStartCycle(d)
-	wg.Add(2)
-	go func() {
-		defer wg.Done()
+	wg.Go(func() {
 		defer func() {
 			if r := recover(); r != nil {
 				slog.Error("panic recovered", "task", "processRequests", "err", r)
@@ -145,9 +144,8 @@ func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 		processMu.Lock()
 		defer processMu.Unlock()
 		processRequests(ctx, cfg, d)
-	}()
-	go func() {
-		defer wg.Done()
+	})
+	wg.Go(func() {
 		defer func() {
 			if r := recover(); r != nil {
 				slog.Error("panic recovered", "task", "checkIMAP", "err", r)
@@ -156,7 +154,7 @@ func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 		imapMu.Lock()
 		defer imapMu.Unlock()
 		checkIMAP(cfg, d)
-	}()
+	})
 	sendNotification(cfg, d)
 
 	for {
@@ -168,9 +166,7 @@ func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 		case <-cycleTicker.C:
 			checkAndStartCycle(d)
 		case <-processTicker.C:
-			wg.Add(1)
-			go func() {
-				defer wg.Done()
+			wg.Go(func() {
 				defer func() {
 					if r := recover(); r != nil {
 						slog.Error("panic recovered", "task", "processRequests", "err", r)
@@ -182,11 +178,9 @@ func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 				}
 				defer processMu.Unlock()
 				processRequests(ctx, cfg, d)
-			}()
+			})
 		case <-imapTicker.C:
-			wg.Add(1)
-			go func() {
-				defer wg.Done()
+			wg.Go(func() {
 				defer func() {
 					if r := recover(); r != nil {
 						slog.Error("panic recovered", "task", "checkIMAP", "err", r)
@@ -198,7 +192,7 @@ func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 				}
 				defer imapMu.Unlock()
 				checkIMAP(cfg, d)
-			}()
+			})
 		case <-notifyTicker.C:
 			sendNotification(cfg, d)
 		}
@@ -435,7 +429,7 @@ func newInboxReviewCmd() *cobra.Command {
 			for _, r := range reqs {
 				fmt.Printf("\n══════ Request #%d — %s (%s) ══════\n", r.ID, r.BrokerName, r.BrokerRegion)
 				if r.ResponseRaw != "" {
-					preview := r.ResponseRaw
+					preview := stripEmailHeaders(r.ResponseRaw)
 					if len(preview) > 500 {
 						preview = preview[:500] + "\n[... truncated]"
 					}
@@ -515,6 +509,69 @@ func newIMAPCheckCmd() *cobra.Command {
 			return nil
 		},
 	}
+}
+
+func newPurgeBouncedCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "purge-bounced",
+		Short: "Remove brokers with address-not-found bounces from DB and brokers.yaml",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			d, err := db.Open("bot.db")
+			if err != nil {
+				return err
+			}
+			defer d.Close()
+
+			brokers, err := db.BouncedBrokers(d)
+			if err != nil {
+				return fmt.Errorf("fetch bounced brokers: %w", err)
+			}
+			if len(brokers) == 0 {
+				fmt.Println("No bounced brokers found.")
+				return nil
+			}
+
+			fmt.Printf("Found %d bounced broker(s):\n", len(brokers))
+			for _, b := range brokers {
+				fmt.Printf("  - %s\n", b.Name)
+			}
+
+			fmt.Print("\nPurge these from DB and brokers.yaml? [y/N]: ")
+			var answer string
+			fmt.Scan(&answer)
+			if strings.ToLower(answer) != "y" {
+				fmt.Println("Aborted.")
+				return nil
+			}
+
+			ids := make([]string, len(brokers))
+			for i, b := range brokers {
+				ids[i] = b.ID
+			}
+
+			removed, err := db.PurgeBrokersFromYAML("brokers.yaml", ids)
+			if err != nil {
+				return fmt.Errorf("yaml: %w", err)
+			}
+			if err := db.PurgeBrokers(d, ids); err != nil {
+				return fmt.Errorf("db: %w", err)
+			}
+
+			fmt.Printf("Done: purged %d broker(s) from DB and %d from brokers.yaml\n", len(ids), removed)
+			return nil
+		},
+	}
+}
+
+// stripEmailHeaders removes raw email headers, returning only the body.
+// If the input has no header block (e.g. already cleaned), it is returned as-is.
+func stripEmailHeaders(raw string) string {
+	for _, sep := range []string{"\r\n\r\n", "\n\n"} {
+		if i := strings.Index(raw, sep); i != -1 {
+			return strings.TrimSpace(raw[i+len(sep):])
+		}
+	}
+	return raw
 }
 
 func sendEmail(cfg *config.Config, region, optOutURL, contact string) error {

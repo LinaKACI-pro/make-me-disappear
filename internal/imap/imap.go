@@ -35,21 +35,26 @@ func Check(cfg config.IMAP, d *sql.DB) error {
 		NotFlag: []imap.Flag{imap.FlagSeen},
 	}
 	if cfg.Since != "" {
-		if t, err := time.Parse("2006-01-02", cfg.Since); err != nil {
+		t, err := time.Parse("2006-01-02", cfg.Since)
+		if err != nil {
 			slog.Warn("imap: invalid since date, ignoring", "since", cfg.Since)
-		} else {
-			criteria.Since = t
 		}
+
+		criteria.Since = t
 	}
 
-	brokers, err := db.AllBrokers(d)
+	brokers, err := db.AllBrokers(d) // todo: trop, reduire !!!!
 	if err != nil {
 		return fmt.Errorf("load brokers: %w", err)
 	}
 	domainMap := make(map[string]string)
+	var brokerNames []brokerName
 	for _, b := range brokers {
 		if domain := extractDomain(b.Contact); domain != "" {
 			domainMap[domain] = b.ID
+		}
+		if b.Name != "" {
+			brokerNames = append(brokerNames, brokerName{b.ID, strings.ToLower(b.Name)})
 		}
 	}
 
@@ -59,13 +64,27 @@ func Check(cfg config.IMAP, d *sql.DB) error {
 			slog.Warn("imap: skipping folder", "folder", folder)
 			continue
 		}
-		total += processFolder(c, d, criteria, domainMap)
+		total += processFolder(c, d, criteria, domainMap, brokerNames)
 	}
 	slog.Info("imap: done", "processed", total)
 	return nil
 }
 
-func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteria, domainMap map[string]string) int {
+type brokerName struct{ id, name string }
+
+func matchByName(brokerNames []brokerName, senderName string) (string, bool) {
+	if senderName == "" {
+		return "", false
+	}
+	for _, b := range brokerNames {
+		if strings.Contains(b.name, senderName) || strings.Contains(senderName, b.name) {
+			return b.id, true
+		}
+	}
+	return "", false
+}
+
+func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteria, domainMap map[string]string, brokerNames []brokerName) int {
 	searchData, err := c.UIDSearch(criteria, nil).Wait()
 	if err != nil {
 		slog.Error("imap: search failed", "err", err)
@@ -83,6 +102,7 @@ func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteri
 		body         string
 		senderLocal  string
 		senderDomain string
+		senderName   string
 		subject      string
 	}
 
@@ -116,6 +136,7 @@ func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteri
 			entry.subject = buf.Envelope.Subject
 			entry.senderLocal = strings.ToLower(buf.Envelope.From[0].Mailbox)
 			entry.senderDomain = strings.ToLower(buf.Envelope.From[0].Host)
+			entry.senderName = strings.ToLower(buf.Envelope.From[0].Name)
 		}
 		msgs = append(msgs, entry)
 	}
@@ -126,31 +147,27 @@ func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteri
 
 	for _, m := range msgs {
 		if strings.Contains(m.senderLocal, "mailer-daemon") {
-			addr := extractBounceAddr(m.body)
-			if addr == "" {
-				slog.Warn("imap: bounce address not found")
-				toMarkSeen = append(toMarkSeen, m.uid)
-				continue
-			}
-			reqID, err := db.LatestSentRequestByContact(d, addr)
-			if err != nil {
-				slog.Warn("imap: bounce not in DB", "contact", addr)
-				toMarkSeen = append(toMarkSeen, m.uid)
-				continue
-			}
-			if err := db.MarkError(d, reqID, "bounce: address not found"); err != nil {
-				slog.Error("imap: mark error failed", "err", err)
-			} else {
-				slog.Info("imap: bounce", "contact", addr, "request", reqID)
-				processed++
-			}
-			toMarkSeen = append(toMarkSeen, m.uid)
+			processed += handleBounce(d, m.body, m.uid, &toMarkSeen)
 			continue
+		}
+		if strings.Contains(m.senderLocal, "postmaster") {
+			if isBounce(m.body) {
+				processed += handleBounce(d, m.body, m.uid, &toMarkSeen)
+				continue
+			}
+			// Not a bounce: postmaster is acting as a human reply, fall through to broker matching.
+			slog.Info("imap: postmaster reply, treating as broker response", "from", m.senderDomain)
 		}
 
 		brokerID, ok := domainMap[m.senderDomain]
 		if !ok {
-			slog.Warn("imap: unmatched", "from", m.senderDomain, "subject", m.subject)
+			brokerID, ok = matchByName(brokerNames, m.senderName)
+		}
+		if !ok {
+			brokerID, ok = matchByName(brokerNames, m.senderDomain)
+		}
+		if !ok {
+			slog.Warn("imap: unmatched", "from", m.senderDomain, "name", m.senderName, "subject", m.subject)
 			continue
 		}
 		reqID, err := db.LatestSentRequest(d, brokerID)
@@ -158,7 +175,8 @@ func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteri
 			slog.Warn("imap: no sent request", "broker", brokerID)
 			continue
 		}
-		if err := db.MarkNeedsReview(d, reqID, m.body); err != nil {
+		preview := "Subject: " + m.subject + "\n\n" + extractBody(m.body)
+		if err := db.MarkNeedsReview(d, reqID, preview); err != nil {
 			slog.Error("imap: mark needs_review failed", "err", err)
 			continue
 		}
@@ -177,12 +195,51 @@ func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteri
 			Op:    imap.StoreFlagsAdd,
 			Flags: []imap.Flag{imap.FlagSeen},
 		}, nil)
-		if _, err := storeCmd.Collect(); err != nil {
+		if _, err := storeCmd.Collect(); err != nil { // a check
 			slog.Error("imap: mark seen failed", "err", err)
 		}
 	}
 
 	return processed
+}
+
+// isBounce returns true if the raw email body contains DSN delivery-failure markers.
+func isBounce(body string) bool {
+	return strings.Contains(body, "Final-Recipient:") ||
+		strings.Contains(body, "Action: failed") ||
+		strings.Contains(body, "Status: 5.")
+}
+
+// handleBounce processes a bounce email, marks the matching request as error,
+// and appends the UID to toMarkSeen. Returns 1 if successfully processed.
+func handleBounce(d *sql.DB, body string, uid imap.UID, toMarkSeen *[]imap.UID) int {
+	*toMarkSeen = append(*toMarkSeen, uid)
+	addr := extractBounceAddr(body)
+	if addr == "" {
+		slog.Warn("imap: bounce address not found")
+		return 0
+	}
+	reqID, err := db.LatestSentRequestByContact(d, addr)
+	if err != nil {
+		slog.Warn("imap: bounce not in DB", "contact", addr)
+		return 0
+	}
+	if err := db.MarkError(d, reqID, "bounce: address not found"); err != nil {
+		slog.Error("imap: mark error failed", "err", err)
+		return 0
+	}
+	slog.Info("imap: bounce", "contact", addr, "request", reqID)
+	return 1
+}
+
+func extractBody(raw string) string {
+	// Headers and body are separated by a blank line.
+	for _, sep := range []string{"\r\n\r\n", "\n\n"} {
+		if i := strings.Index(raw, sep); i != -1 {
+			return strings.TrimSpace(raw[i+len(sep):])
+		}
+	}
+	return raw
 }
 
 func extractBounceAddr(body string) string {

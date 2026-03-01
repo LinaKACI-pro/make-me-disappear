@@ -5,6 +5,7 @@ import (
 	_ "embed"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -380,4 +381,84 @@ func LatestSentRequestByContact(d *sql.DB, contact string) (int, error) {
 		WHERE LOWER(b.contact) = LOWER(?) AND r.status = 'sent'
 		ORDER BY r.id DESC LIMIT 1`, contact).Scan(&id)
 	return id, err
+}
+
+// BouncedBrokers returns brokers that have an "address not found" bounce error.
+func BouncedBrokers(d *sql.DB) ([]Broker, error) {
+	rows, err := d.Query(`
+		SELECT DISTINCT b.id, b.name FROM requests r
+		JOIN brokers b ON b.id = r.broker_id
+		WHERE r.status = 'error' AND r.notes LIKE '%address not found%'`)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	var brokers []Broker
+	for rows.Next() {
+		var b Broker
+		if err := rows.Scan(&b.ID, &b.Name); err != nil {
+			return nil, err
+		}
+		brokers = append(brokers, b)
+	}
+	return brokers, rows.Err()
+}
+
+// PurgeBrokers deletes all requests and broker records for the given IDs.
+func PurgeBrokers(d *sql.DB, ids []string) error {
+	if len(ids) == 0 {
+		return nil
+	}
+	in := "?" + strings.Repeat(",?", len(ids)-1)
+	args := make([]any, len(ids))
+	for i, id := range ids {
+		args[i] = id
+	}
+	if _, err := d.Exec(`DELETE FROM requests WHERE broker_id IN (`+in+`)`, args...); err != nil {
+		return fmt.Errorf("delete requests: %w", err)
+	}
+	if _, err := d.Exec(`DELETE FROM brokers WHERE id IN (`+in+`)`, args...); err != nil {
+		return fmt.Errorf("delete brokers: %w", err)
+	}
+	return nil
+}
+
+// PurgeBrokersFromYAML removes brokers with the given IDs from the YAML file
+// at path and rewrites it. Returns the number of entries removed.
+func PurgeBrokersFromYAML(path string, ids []string) (int, error) {
+	if len(ids) == 0 {
+		return 0, nil
+	}
+	toRemove := make(map[string]bool, len(ids))
+	for _, id := range ids {
+		toRemove[id] = true
+	}
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return 0, fmt.Errorf("read brokers file: %w", err)
+	}
+	var f brokersFile
+	if err := yaml.Unmarshal(data, &f); err != nil {
+		return 0, fmt.Errorf("parse brokers file: %w", err)
+	}
+
+	var kept []brokerYAML
+	for _, b := range f.Brokers {
+		if !toRemove[b.ID] {
+			kept = append(kept, b)
+		}
+	}
+	removed := len(f.Brokers) - len(kept)
+	f.Brokers = kept
+
+	out, err := yaml.Marshal(f)
+	if err != nil {
+		return 0, fmt.Errorf("marshal brokers: %w", err)
+	}
+	if err := os.WriteFile(path, out, 0644); err != nil {
+		return 0, fmt.Errorf("write brokers file: %w", err)
+	}
+	return removed, nil
 }
