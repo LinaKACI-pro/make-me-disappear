@@ -1,0 +1,19 @@
+identity:
+  first_name: "Jane"
+  last_name: "Doe"
+  email: "jane.optout@example.com"
+  phone: "+33600000000"
+  address: "123 Rue de la Paix, 75001 Paris"
+  country: "FR"
+
+smtp:
+  host: "smtp.gmail.com"
+  port: 587
+  user: "jane.optout@gmail.com"
+  password: "${SMTP_PASSWORD}"
+
+imap:
+  host: "imap.gmail.com"
+  port: 993
+  user: "jane.optout@gmail.com"
+  password: "${IMAP_PASSWORD}"

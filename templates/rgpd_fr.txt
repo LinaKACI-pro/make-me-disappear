@@ -1,0 +1,29 @@
+Subject: Demande d'effacement de données personnelles — Article 17 RGPD
+
+Madame, Monsieur,
+
+Conformément au Règlement (UE) 2016/679 (RGPD), Article 17,
+je vous adresse une demande d'effacement de l'ensemble des
+données personnelles me concernant que vous détenez.
+{{if .OptOutURL}}
+J'ai constaté que votre site affiche des résultats me
+concernant à l'adresse suivante : {{.OptOutURL}}
+{{end}}
+
+Mes informations :
+- Nom complet : {{.FullName}}
+- Email : {{.Email}}
+- {{if .Phone}}Téléphone : {{.Phone}}{{end}}
+- {{if .Address}}Adresse : {{.Address}}{{end}}
+
+Je vous demande de :
+1. Supprimer l'intégralité de mes données personnelles
+2. Confirmer la suppression par retour d'email
+3. Cesser tout traitement futur de mes données
+
+Vous disposez de 30 jours pour répondre à cette demande
+(Article 12(3) RGPD). En cas de non-réponse, je me réserve
+le droit de saisir la CNIL.
+
+Cordialement,
+{{.FullName}}

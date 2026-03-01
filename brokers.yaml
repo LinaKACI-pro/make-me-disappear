@@ -1,0 +1,2685 @@
+# Data brokers & ad-tech — EU + GLOBAL (no US)
+# Total: 320
+
+brokers:
+  - id: "118218-lenumero-multinational-kgb-group"
+    name: "118218 lenumero multinational kgb group"
+    region: "EU"
+    method: "email"
+    contact: "serviceclient@118218.fr"
+    tier: 2
+    notes: "Paris, Paris; Information Services"
+
+  - id: "a-menarini-farmaceutica-internazionale-srl-uk-branch"
+    name: "A.Menarini Farmaceutica Internazionale SRL-UK Branch"
+    region: "EU"
+    method: "email"
+    contact: "dpo@menarini.com"
+    tier: 2
+    notes: "Firenze, Italy; Pharmaceutical Manufacturing"
+
+  - id: "address-intelligence"
+    name: "Address Intelligence"
+    region: "EU"
+    method: "email"
+    contact: "dataprotection@addintel.co.uk"
+    opt_out_url: "https://www.addintel.co.uk/privacy"
+    tier: 2
+    notes: "Queensway, London; Advertising Services"
+
+  - id: "adform-london-limited"
+    name: "Adform London Limited"
+    region: "EU"
+    method: "email"
+    contact: "dpo@adform.com"
+    tier: 2
+    notes: "{'country': 'DK', 'fullAddress': 'Silkegade 3b, Copenhagen, Capital Region, 1113, DK', 'locality': 'Copenhagen', 'postalCode': '1113', 'region': 'Capital Region', 'street': 'Silkegade 3b'}; IT Services and IT Consulting"
+
+  - id: "adsquare-gmbh"
+    name: "adsquare GmbH"
+    region: "EU"
+    method: "email"
+    contact: "legal@adsquare.com"
+    opt_out_url: "adsquare.com/privacy/us_privacy_supplement/"
+    tier: 2
+    notes: "{'country': 'DE', 'fullAddress': 'Saarbrücker Str. 36, Berlin, Berlin, 10405, DE', 'locality': 'Berlin', 'postalCode': '10405', 'region': 'Berlin', 'street': 'Saarbrücker Str. 36'}; Software Development"
+
+  - id: "architonic"
+    name: "Architonic"
+    region: "EU"
+    method: "email"
+    contact: "legal@architonic.com"
+    opt_out_url: "https://www.architonic.com/en/privacy"
+    tier: 2
+    notes: "Zurich, Zurich; Advertising Services"
+
+  - id: "associated-newspapers-limited"
+    name: "Associated Newspapers Limited"
+    region: "EU"
+    method: "email"
+    contact: "enquiries@dmgt.com"
+    tier: 2
+    notes: "London, England; Information Services"
+
+  - id: "audience-serv-gmbh"
+    name: "Audience Serv GmbH"
+    region: "EU"
+    method: "email"
+    contact: "datenschutz@audienceserv.com"
+    tier: 2
+    notes: "{'country': 'DE', 'fullAddress': 'Schönhauser Allee 36, Berlin, Berlin, 10435, DE', 'locality': 'Berlin', 'postalCode': '10435', 'region': 'Berlin', 'street': 'Schönhauser Allee 36'}; Advertising Services"
+
+  - id: "bmi-globaled-ltd"
+    name: "Bmi Globaled Ltd"
+    region: "EU"
+    method: "email"
+    contact: "rupert@bmiglobaled.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'BMI GlobalEd Ltd. (5th Floor) , London, London, WC1R 4HQ, GB', 'locality': 'London', 'postalCode': 'WC1R 4HQ', 'region': 'London', 'street': 'BMI GlobalEd Ltd. (5th Floor) '}; Advertising Services"
+
+  - id: "brave-spark-media-ltd"
+    name: "Brave Spark Media Ltd"
+    region: "EU"
+    method: "email"
+    contact: "webm@bravespark.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '34 Bow Street, London, England, WC2E 7AU, GB', 'locality': 'London', 'postalCode': 'WC2E 7AU', 'region': 'England', 'street': '34 Bow Street'}; Advertising Services"
+
+  - id: "bvd"
+    name: "bvd"
+    region: "EU"
+    method: "email"
+    contact: "privacy@moodys.com"
+    tier: 2
+    notes: "London, England; Information Services"
+
+  - id: "calameo"
+    name: "Calameo"
+    region: "EU"
+    method: "email"
+    contact: "press@calameo.com"
+    opt_out_url: "https://en.calameo.com/privacy"
+    tier: 2
+    notes: "Paris; Advertising Services"
+
+  - id: "chime-communications-limited"
+    name: "Chime communications limited"
+    region: "EU"
+    method: "email"
+    contact: "webqueries@computershare.co.uk"
+    opt_out_url: "https://www.chimegroup.com/privacy-policy/"
+    tier: 2
+    notes: "Victoria, London; Advertising Services"
+
+  - id: "communisis"
+    name: "Communisis"
+    region: "EU"
+    method: "email"
+    contact: "enquiries@communisis.com"
+    opt_out_url: "https://www.communisis.com/policies/privacy-policy"
+    tier: 2
+    notes: "LONDON; Advertising Services"
+
+  - id: "criteo"
+    name: "Criteo"
+    region: "EU"
+    method: "email"
+    contact: "dpo@criteo.com"
+    opt_out_url: "https://www.criteo.com/privacy/"
+    tier: 2
+    notes: "Paris; Advertising Services"
+
+  - id: "criteria-fieldwork-ltd"
+    name: "Criteria Fieldwork Ltd"
+    region: "EU"
+    method: "email"
+    contact: "dpo@criteria.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '1-2 Hampstead Gate, London, undefined, NW3 6AL, GB', 'locality': 'London', 'postalCode': 'NW3 6AL', 'street': '1-2 Hampstead Gate'}; Market Research"
+
+  - id: "data-ireland"
+    name: "Data Ireland"
+    region: "EU"
+    method: "email"
+    contact: "datacompliance@dataireland.ie"
+    opt_out_url: "https://dataireland.ie/Policies/DataIrelandPrivacyPolicy"
+    tier: 2
+    notes: "Dublin 1, County Dublin; Information Services"
+
+  - id: "dc-byte-ltd"
+    name: "Dc Byte Ltd"
+    region: "EU"
+    method: "email"
+    contact: "ed@dcbyte.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '78 Union Building, City of London, England, EC3V 3QQ, GB', 'locality': 'City of London', 'postalCode': 'EC3V 3QQ', 'region': 'England', 'street': '78 Union Building'}; Information Services"
+
+  - id: "dotdigital"
+    name: "dotdigital"
+    region: "EU"
+    method: "email"
+    contact: "privacy@dotdigital.com"
+    opt_out_url: "https://dotdigital.com/terms/privacy-policy/"
+    tier: 2
+    notes: "London Bridge, London; Advertising Services"
+
+  - id: "engine-people-uk-limited"
+    name: "Engine People UK Limited"
+    region: "EU"
+    method: "email"
+    contact: "dpo-hub@next15.com"
+    tier: 2
+    notes: "London, London; Advertising Services"
+
+  - id: "equifax-iberia"
+    name: "Equifax iberia"
+    region: "EU"
+    method: "email"
+    contact: "dpo@equifax.es"
+    opt_out_url: "https://soluciones.equifax.es/legal"
+    tier: 2
+    notes: "Madrid, Madrid; Financial Services"
+
+  - id: "euromoney-institutional-investor"
+    name: "Euromoney institutional investor"
+    region: "EU"
+    method: "email"
+    contact: "customerservices@euromoneyplc.com"
+    tier: 2
+    notes: "London; Information Services"
+
+  - id: "f-i-l-market-research-limited"
+    name: "F I L Market Research Limited"
+    region: "EU"
+    method: "email"
+    contact: "compliance@watermelonresearch.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Greencoat House, Francis Street, London, London, SW1P 1DH, GB', 'locality': 'London', 'postalCode': 'SW1P 1DH', 'region': 'London', 'street': 'Greencoat House, Francis Street'}; Market Research"
+
+  - id: "faithful-friend-trusty-scout-limited"
+    name: "Faithful Friend. Trusty Scout Limited"
+    region: "EU"
+    method: "email"
+    contact: "rebecca@wearekemosabe.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '40 Bowling Green Lane, London, England, EC1R 0BD, GB', 'locality': 'London', 'postalCode': 'EC1R 0BD', 'region': 'England', 'street': '40 Bowling Green Lane'}; Advertising Services"
+
+  - id: "ferreter-inc"
+    name: "Ferreter Inc."
+    region: "EU"
+    method: "email"
+    contact: "privacy@ferret.ai"
+    tier: 2
+    notes: "Warsaw, Mazowieckie; Advertising Services"
+
+  - id: "fifty"
+    name: "Fifty"
+    region: "EU"
+    method: "email"
+    contact: "privacy@fifty.io"
+    tier: 2
+    notes: "London, England; Advertising Services"
+
+  - id: "hall-partners-europe-limited"
+    name: "Hall & Partners Europe Limited"
+    region: "EU"
+    method: "email"
+    contact: "dpo@hallandpartners.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Bankside 2, London, undefined, SE1 0SW, GB', 'locality': 'London', 'postalCode': 'SE1 0SW', 'street': 'Bankside 2'}; Market Research"
+
+  - id: "highsnobiety"
+    name: "Highsnobiety"
+    region: "EU"
+    method: "email"
+    contact: "datenschutz@usercentrics.com"
+    opt_out_url: "http://highsnobiety.com/privacy"
+    tier: 2
+    notes: "Berlin, Berlin; Advertising Services"
+
+  - id: "hybrid-theory"
+    name: "Hybrid Theory"
+    region: "EU"
+    method: "email"
+    contact: "privacy@hybridtheory.com"
+    tier: 2
+    notes: "London, Select; Advertising Services"
+
+  - id: "informa-uk-ltd"
+    name: "Informa UK Ltd."
+    region: "EU"
+    method: "email"
+    contact: "compliance.officer@informa.com"
+    opt_out_url: "https://informa.com/generic-content/privacy-policy/"
+    tier: 2
+    notes: "London; Information Services"
+
+  - id: "jellyfish"
+    name: "Jellyfish"
+    region: "EU"
+    method: "email"
+    contact: "mydata@jellyfish.com"
+    tier: 2
+    notes: "London, Greater London; Advertising Services"
+
+  - id: "jobmedic"
+    name: "Jobmedic"
+    region: "EU"
+    method: "email"
+    contact: "riskandcompliance@careerbuilder.com"
+    opt_out_url: "https://www.jobmedic.co.uk/s/privacy"
+    tier: 2
+    notes: "London, England; Advertising Services"
+
+  - id: "john-ayling-and-associates-limited"
+    name: "John Ayling And Associates Limited"
+    region: "EU"
+    method: "email"
+    contact: "rtemple@jaa-media.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '27 Soho Square, London, England, W1D 3, GB', 'locality': 'London', 'postalCode': 'W1D 3', 'region': 'England', 'street': '27 Soho Square'}; Advertising Services"
+
+  - id: "kantar-consulting"
+    name: "Kantar consulting"
+    region: "EU"
+    method: "email"
+    contact: "privacy@workday.com"
+    opt_out_url: "https://www.kantarworldpanel.com/global/Legal"
+    tier: 2
+    notes: "London; Market Research"
+
+  - id: "lexology"
+    name: "Lexology"
+    region: "EU"
+    method: "email"
+    contact: "enquiries@lexology.com"
+    opt_out_url: "https://www.lexology.com/Privacy"
+    tier: 2
+    notes: "London, London; Information Services"
+
+  - id: "loopme-com"
+    name: "loopme.com"
+    region: "EU"
+    method: "email"
+    contact: "legal@loopme.com"
+    tier: 2
+    notes: "London; Advertising Services"
+
+  - id: "loudhouse-research-limited"
+    name: "Loudhouse Research Limited"
+    region: "EU"
+    method: "email"
+    contact: "dataprotectionmanager@octopusgrp.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '40 Chancery Lane, London, England, WC2A 1JA, GB', 'locality': 'London', 'postalCode': 'WC2A 1JA', 'region': 'England', 'street': '40 Chancery Lane'}; Marketing Services"
+
+  - id: "lucas-hood-ltd"
+    name: "Lucas Hood Ltd"
+    region: "EU"
+    method: "email"
+    contact: "murray@la-plage.london"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '79-81 Borough Road, London, England, SE1 1DN, GB', 'locality': 'London', 'postalCode': 'SE1 1DN', 'region': 'England', 'street': '79-81 Borough Road'}; Advertising Services"
+
+  - id: "lyons-presentations-group-limited"
+    name: "Lyons Presentations Group Limited"
+    region: "EU"
+    method: "email"
+    contact: "mbernstein@rocketproducts.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '7a Regis Road, London, England, NW5 3EW, GB', 'locality': 'London', 'postalCode': 'NW5 3EW', 'region': 'England', 'street': '7a Regis Road'}; Advertising Services"
+
+  - id: "m-c-saatchi-group"
+    name: "M&c saatchi group"
+    region: "EU"
+    method: "email"
+    contact: "companysecretary@mcsaatchi.com"
+    opt_out_url: "https://mcsaatchi.com/privacy-policy"
+    tier: 2
+    notes: "London, England; Advertising Services"
+
+  - id: "mail-expertise-llp"
+    name: "Mail Expertise Llp"
+    region: "EU"
+    method: "email"
+    contact: "dpo@mailxpertise.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Eurogate Business Park, Ashford, Kent, TN24 8XW, GB', 'locality': 'Ashford', 'postalCode': 'TN24 8XW', 'region': 'Kent', 'street': 'Eurogate Business Park'}; Advertising Services"
+
+  - id: "media-sense-communications-limited"
+    name: "Media Sense Communications Limited"
+    region: "EU"
+    method: "email"
+    contact: "dpo@media-sense.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Tennyson House, London, London, W1W 5PA, GB', 'locality': 'London', 'postalCode': 'W1W 5PA', 'region': 'London', 'street': 'Tennyson House'}; Advertising Services"
+
+  - id: "mediapost"
+    name: "Mediapost"
+    region: "EU"
+    method: "email"
+    contact: "webmaster@mediapost.fr"
+    opt_out_url: "https://www.mediapost.fr/mentions-legales"
+    tier: 2
+    notes: "Montrouge, Ile de France; Advertising Services"
+
+  - id: "mercieca-limited"
+    name: "Mercieca Limited"
+    region: "EU"
+    method: "email"
+    contact: "matthew@mercieca.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'undefined, London, undefined, undefined, GB', 'locality': 'London'}; Advertising Services"
+
+  - id: "numberly-ltd"
+    name: "Numberly Ltd"
+    region: "EU"
+    method: "email"
+    contact: "finance@numberly.com"
+    tier: 2
+    notes: "{'country': 'FR', 'fullAddress': '28, Rue de Châteaudun, Paris, Ile-de-France, 75009, FR', 'locality': 'Paris', 'postalCode': '75009', 'region': 'Ile-de-France', 'street': '28, Rue de Châteaudun'}; Advertising Services"
+
+  - id: "oliver-agency"
+    name: "Oliver agency"
+    region: "EU"
+    method: "email"
+    contact: "privacyofficer@oliver.agency"
+    opt_out_url: "https://www.oliver.agency/privacy-policy/"
+    tier: 2
+    notes: "London, London; Advertising Services"
+
+  - id: "pictet-cie-europe-s-a-london-branch"
+    name: "Pictet & Cie (Europe) S.A., London Branch"
+    region: "EU"
+    method: "email"
+    contact: "pollagnier@pictet.com"
+    tier: 2
+    notes: "{'country': 'CH', 'fullAddress': 'Route des Acacias 60, Geneva, undefined, 1211, CH', 'locality': 'Geneva', 'postalCode': '1211', 'street': 'Route des Acacias 60'}; Financial Services"
+
+  - id: "pollitt-partners-limited"
+    name: "Pollitt & Partners Limited"
+    region: "EU"
+    method: "email"
+    contact: "andy.p@pollittandpartners.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '91 Wimpole Street, London, London, W1G 0EF, GB', 'locality': 'London', 'postalCode': 'W1G 0EF', 'region': 'London', 'street': '91 Wimpole Street'}; Advertising Services"
+
+  - id: "precis-digital-limited"
+    name: "Precis Digital Limited"
+    region: "EU"
+    method: "email"
+    contact: "fries@precisdigital.com"
+    tier: 2
+    notes: "{'country': 'SE', 'fullAddress': 'Åsögatan 121, Stockholm, Sweden, 116 24, SE', 'locality': 'Stockholm', 'postalCode': '116 24', 'region': 'Sweden', 'street': 'Åsögatan 121'}; Advertising Services"
+
+  - id: "proximity-worldwide"
+    name: "Proximity worldwide"
+    region: "EU"
+    method: "email"
+    contact: "webmaster@proximityworld.com"
+    opt_out_url: "https://www.proximityworld.com/privacy-policy"
+    tier: 2
+    notes: "London; Advertising Services"
+
+  - id: "publitas-com"
+    name: "Publitas.com"
+    region: "EU"
+    method: "email"
+    contact: "privacy@publitas.com"
+    opt_out_url: "https://www.publitas.com/privacy/"
+    tier: 2
+    notes: "Amsterdam; Advertising Services"
+
+  - id: "realsource"
+    name: "RealSource"
+    region: "EU"
+    method: "email"
+    contact: "privacy@realsourcedata.com"
+    tier: 2
+    notes: "Geneva, Illinois; Advertising Services"
+
+  - id: "research-and-markets"
+    name: "Research and Markets"
+    region: "EU"
+    method: "email"
+    contact: "your@email.com"
+    opt_out_url: "https://www.researchandmarkets.com/info/privacy.asp"
+    tier: 2
+    notes: "Dublin; Market Research"
+
+  - id: "rightly"
+    name: "Rightly"
+    region: "EU"
+    method: "email"
+    contact: "privacy@rightly.co.uk"
+    tier: 2
+    notes: "London, England; Information Services"
+
+  - id: "river-group-content-limited"
+    name: "River Group Content Limited"
+    region: "EU"
+    method: "email"
+    contact: "aseaton@therivergroup.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'GARDEN FLOOR, LONDON, undefined, W2 2ES, GB', 'locality': 'LONDON', 'postalCode': 'W2 2ES', 'street': 'GARDEN FLOOR'}; Advertising Services"
+
+  - id: "rsmb-limited"
+    name: "RSMB LIMITED"
+    region: "EU"
+    method: "email"
+    contact: "dpo@rsmb.co.uk"
+    tier: 2
+    notes: "London, London; Market Research"
+
+  - id: "salesland"
+    name: "Salesland"
+    region: "EU"
+    method: "email"
+    contact: "dpo@salesland.net"
+    tier: 2
+    notes: "Madrid, Comunidad de Madrid; Advertising Services"
+
+  - id: "sendinblue"
+    name: "Sendinblue"
+    region: "EU"
+    method: "email"
+    contact: "privacy@illuno.com"
+    opt_out_url: "https://www.sendinblue.com/legal/antispampolicy/"
+    tier: 2
+    notes: "Paris, Île-de-France; Advertising Services"
+
+  - id: "socialbakers"
+    name: "Socialbakers"
+    region: "EU"
+    method: "email"
+    contact: "dataprivacy@socialbakes.com"
+    opt_out_url: "https://www.socialbakers.com/privacy-policy"
+    tier: 2
+    notes: "Prague; Advertising Services"
+
+  - id: "spore-london-limited"
+    name: "Spore London Limited"
+    region: "EU"
+    method: "email"
+    contact: "mark@codec.ai"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'undefined, London, England, EC1V 1AA, GB', 'locality': 'London', 'postalCode': 'EC1V 1AA', 'region': 'England'}; Advertising Services"
+
+  - id: "the-grove-media-limited"
+    name: "The Grove Media Limited"
+    region: "EU"
+    method: "email"
+    contact: "sguthrie@thegrovemedia.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '35 Garway Road, London, undefined, W2 4QF, GB', 'locality': 'London', 'postalCode': 'W2 4QF', 'street': '35 Garway Road'}; Advertising Services"
+
+  - id: "trackonomics-limited"
+    name: "Trackonomics Limited"
+    region: "EU"
+    method: "email"
+    contact: "kfir@trackonomics.net"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Plexal, Here East, London, London, E20 3BS, GB', 'locality': 'London', 'postalCode': 'E20 3BS', 'region': 'London', 'street': 'Plexal, Here East'}; Advertising Services"
+
+  - id: "vizeum"
+    name: "Vizeum"
+    region: "EU"
+    method: "email"
+    contact: "dpo@dentsuaegis.com"
+    opt_out_url: "https://www.vizeum.com/en/us/privacy-policy/"
+    tier: 2
+    notes: "London; Advertising Services"
+
+  - id: "wgsn-com"
+    name: "WGSN.com"
+    region: "EU"
+    method: "email"
+    contact: "legal@wgsn.com"
+    opt_out_url: "https://www.wgsn.com/en/privacy-cookies-policy/"
+    tier: 2
+    notes: "London, London; Information Services"
+
+  - id: "wpp"
+    name: "WPP"
+    region: "EU"
+    method: "email"
+    contact: "enquiries@wpp.com"
+    opt_out_url: "http://www.wpp.com/wpp/privacy/"
+    tier: 2
+    notes: "London, London; Advertising Services"
+
+  - id: "zeotap"
+    name: "Zeotap"
+    region: "EU"
+    method: "email"
+    contact: "privacy@zeotap.com"
+    tier: 2
+    notes: "Berlin, Berlin; Software Development"
+
+  - id: "160by2"
+    name: "160by2"
+    region: "GLOBAL"
+    method: "email"
+    contact: "contactus@160by2.com"
+    opt_out_url: "http://www.160by2.com/PrivacyPolicy"
+    tier: 2
+    notes: "Hyderabad; Advertising Services"
+
+  - id: "3sixfive-pro-limited"
+    name: "3sixfive Pro Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "kim@3sixfive.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'First Floor Leisureline House Business Centre, Barnstaple, Devon, EX31 3NJ, GB', 'locality': 'Barnstaple', 'postalCode': 'EX31 3NJ', 'region': 'Devon', 'street': 'First Floor Leisureline House Business Centre'}; Advertising Services"
+
+  - id: "411-ca"
+    name: "411.ca"
+    region: "GLOBAL"
+    method: "email"
+    contact: "aide@411.ca"
+    opt_out_url: "https://411.ca/privacy-policy"
+    tier: 2
+    notes: "Toronto, ON; Advertising Services"
+
+  - id: "4imprint"
+    name: "4imprint"
+    region: "GLOBAL"
+    method: "email"
+    contact: "administrator@4imprint.com"
+    opt_out_url: "https://www.4imprint.com/info/privacy"
+    tier: 2
+    notes: "Oshkosh, WI; Advertising Services"
+
+  - id: "a-t-p-advertising-marketing-limited"
+    name: "A.T.P. Advertising & Marketing Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "ian@atpadvertising.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Elmete House, Leeds, undefined, LS8 2LJ, GB', 'locality': 'Leeds', 'postalCode': 'LS8 2LJ', 'street': 'Elmete House'}; Advertising Services"
+
+  - id: "acxiom"
+    name: "Acxiom"
+    region: "GLOBAL"
+    method: "email"
+    contact: "askprivacy@acxiom.com"
+    opt_out_url: "https://www.acxiom.com/about-us/privacy/"
+    tier: 2
+    notes: "Conway, Arkansas; Advertising Services"
+
+  - id: "ad-maven"
+    name: "Ad-maven"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@ad-maven.com"
+    opt_out_url: "http://ad-maven.com/privacy.html"
+    tier: 2
+    notes: "Tel Aviv; Advertising Services"
+
+  - id: "adare-sec-limited"
+    name: "Adare SEC Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@adaresec.com"
+    tier: 2
+    notes: "Huddersfield, West Yorkshire; Advertising Services"
+
+  - id: "adler-weiner-research"
+    name: "Adler Weiner Research"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@adlerweiner.com"
+    tier: 2
+    notes: "Lincolnwood, IL; Market Research"
+
+  - id: "admetrics-pl"
+    name: "Admetrics.pl"
+    region: "GLOBAL"
+    method: "email"
+    contact: "abuse@admetrics.pl"
+    opt_out_url: "https://admetrics.pl/polityka-prywatnosci/"
+    tier: 2
+    notes: "Poznań, wielkopolskie; Advertising Services"
+
+  - id: "adnews-oficial"
+    name: "Adnews oficial"
+    region: "GLOBAL"
+    method: "email"
+    contact: "carol@adnews.com.br"
+    tier: 2
+    notes: "São Paulo, São Paulo; Advertising Services"
+
+  - id: "adstra-llc"
+    name: "Adstra LLC"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy.officer@adstradata.com"
+    opt_out_url: "adstradata.com/privacy-policy/"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '750 College Road East, Princeton, New Jersey, 08540, US', 'locality': 'Princeton', 'postalCode': '08540', 'region': 'New Jersey', 'street': '750 College Road East'}; Advertising Services"
+
+  - id: "aidem-inc"
+    name: "Aidem inc"
+    region: "GLOBAL"
+    method: "email"
+    contact: "aidem_privacy@aidem.co.jp"
+    opt_out_url: "https://www.aidem.co.jp/policy/privacypolicy/index.html"
+    tier: 2
+    notes: "Information Services"
+
+  - id: "all-global-resources-llc"
+    name: "All Global Resources LLC"
+    region: "GLOBAL"
+    method: "email"
+    contact: "lzepeda@agrgroupinc.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '2925 N. Green Valley Pkwy., Henderson, Nevada, 89104, US', 'locality': 'Henderson', 'postalCode': '89104', 'region': 'Nevada', 'street': '2925 N. Green Valley Pkwy.'}; Advertising Services"
+
+  - id: "allant-group"
+    name: "Allant Group"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@allantgroup.com"
+    tier: 2
+    notes: "Downers Grove, IL; Advertising Services"
+
+  - id: "alliant"
+    name: "Alliant"
+    region: "GLOBAL"
+    method: "email"
+    contact: "compliance@alliantdata.com"
+    tier: 2
+    notes: "Brewster, NY; Advertising Services"
+
+  - id: "allis-field-marketing"
+    name: "Allis - field marketing"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@allisgps.com.br"
+    opt_out_url: "https://allis.com.br/politica-de-privacidade/"
+    tier: 2
+    notes: "São Paulo, SP; Advertising Services"
+
+  - id: "ansira"
+    name: "Ansira"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@ansira.com"
+    opt_out_url: "https://ansira.com/privacy/"
+    tier: 2
+    notes: "St. Louis, MO; Advertising Services"
+
+  - id: "ansonia-credit-data-inc"
+    name: "Ansonia Credit Data Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "usprivacy@equifax.com"
+    opt_out_url: "www.equifax.com/personal/my-privacy/"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '2415 Heritage Ct SW, Olympia, WA, 98502, US', 'locality': 'Olympia', 'postalCode': '98502', 'region': 'WA', 'street': '2415 Heritage Ct SW'}; Information Services"
+
+  - id: "anything-is-possible-media-limited"
+    name: "Anything Is Possible Media Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "mark@aip.media"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '25 Pelham Square, Brighton, England, BN1 4ET, GB', 'locality': 'Brighton', 'postalCode': 'BN1 4ET', 'region': 'England', 'street': '25 Pelham Square'}; Advertising Services"
+
+  - id: "apollo-interactive"
+    name: "Apollo Interactive"
+    region: "GLOBAL"
+    method: "email"
+    contact: "requests@apollointeractive.com"
+    tier: 2
+    notes: "El Segundo, CA; Advertising Services"
+
+  - id: "arken-pop-international-ltd"
+    name: "ARKEN POP INTERNATIONAL LTD"
+    region: "GLOBAL"
+    method: "email"
+    contact: "kbaker@arken-pop.com"
+    tier: 2
+    notes: "Newmarket, Suffolk; Advertising Services"
+
+  - id: "ashley-bolser-agency-limited"
+    name: "Ashley Bolser Agency Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "jane@bolser.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Marshall Court, Leeds, West Yorkshire, LS11 9YP, GB', 'locality': 'Leeds', 'postalCode': 'LS11 9YP', 'region': 'West Yorkshire', 'street': 'Marshall Court'}; Marketing Services"
+
+  - id: "atlantis-health-uk-limited"
+    name: "Atlantis Health UK Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@atlantishealth.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '18 Bank Street, Summit, New Jersey, 07901, US', 'locality': 'Summit', 'postalCode': '07901', 'region': 'New Jersey', 'street': '18 Bank Street'}; Marketing Services"
+
+  - id: "audience-acuity"
+    name: "Audience Acuity"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@audienceacuity.com"
+    tier: 2
+    notes: "Las Vegas, Nevada; Advertising Services"
+
+  - id: "audience-collective-limited"
+    name: "Audience Collective Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "simon@thisisaudience.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Cross York Street Studios, Leeds, undefined, LS2 7BL, GB', 'locality': 'Leeds', 'postalCode': 'LS2 7BL', 'street': 'Cross York Street Studios'}; Advertising Services"
+
+  - id: "autotrader-south-africa"
+    name: "Autotrader (South Africa)"
+    region: "GLOBAL"
+    method: "email"
+    contact: "customerservice@autotrader.co.za"
+    opt_out_url: "https://www.autotrader.co.za/privacy-policy"
+    tier: 2
+    notes: "Randburg, Gauteng; Advertising Services"
+
+  - id: "bestmark"
+    name: "Bestmark"
+    region: "GLOBAL"
+    method: "email"
+    contact: "shops@bestmark.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '1600 Utica Ave S, St Louis Park, Minnesota, 55416, US', 'locality': 'St Louis Park', 'postalCode': '55416', 'region': 'Minnesota', 'street': '1600 Utica Ave S'}; Market Research"
+
+  - id: "bibliotheca-alexandrina"
+    name: "Bibliotheca alexandrina"
+    region: "GLOBAL"
+    method: "email"
+    contact: "sales@bibalex.org"
+    tier: 2
+    notes: "Alexandria, Alexandria; Libraries"
+
+  - id: "biostrata-ltd"
+    name: "Biostrata Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "crussell@biostratamarketing.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'BioStrata Ltd, Milton Hall, Ely Road, Cambridge, Cambridgeshire, CB24 6WZ, GB', 'locality': 'Cambridge', 'postalCode': 'CB24 6WZ', 'region': 'Cambridgeshire', 'street': 'BioStrata Ltd, Milton Hall, Ely Road'}; Marketing Services"
+
+  - id: "bizportal"
+    name: "Bizportal"
+    region: "GLOBAL"
+    method: "email"
+    contact: "biznews@bizportal.co.il"
+    opt_out_url: "http://www.bizportal.co.il/general/privacypolicy"
+    tier: 2
+    notes: "Advertising Services"
+
+  - id: "blackad-ltd"
+    name: "Blackad Ltd."
+    region: "GLOBAL"
+    method: "email"
+    contact: "laura@blackad.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '53 Bothwell Street, Glasgow, Scotland, G2 6TS, GB', 'locality': 'Glasgow', 'postalCode': 'G2 6TS', 'region': 'Scotland', 'street': '53 Bothwell Street'}; Advertising Services"
+
+  - id: "bounty"
+    name: "Bounty"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@bounty.com"
+    opt_out_url: "http://www.bounty.com/info/privacy-policy"
+    tier: 2
+    notes: "Welwyn Garden City, Hertfordshire; Advertising Services"
+
+  - id: "brand-iq-limited"
+    name: "Brand Iq Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "stuart.cripps-schnoor@brand-iq.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Unit C, John Tate Road, Hertford, Herts, SG137DT, GB', 'locality': 'Hertford', 'postalCode': 'SG137DT', 'region': 'Herts', 'street': 'Unit C, John Tate Road'}; Advertising Services"
+
+  - id: "bridge"
+    name: "Bridge"
+    region: "GLOBAL"
+    method: "email"
+    contact: "connect@thebridgecorp.com"
+    tier: 2
+    notes: "Paramus, NJ; Advertising Services"
+
+  - id: "bright-local"
+    name: "Bright Local"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@brightlocal.com"
+    opt_out_url: "https://www.brightlocal.com/privacy-policy/"
+    tier: 2
+    notes: "Brighton, England; Advertising Services"
+
+  - id: "brooksim"
+    name: "brooksim"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@brooksim.com"
+    tier: 2
+    notes: "Bonita Springs, FL; Advertising Services"
+
+  - id: "business-com"
+    name: "Business.com"
+    region: "GLOBAL"
+    method: "email"
+    contact: "customerservice@business.com"
+    opt_out_url: "https://www.business.com/legal/"
+    tier: 2
+    notes: "Waltham, MA; Advertising Services"
+
+  - id: "campaign-monitor-holdings-uk-limited"
+    name: "Campaign Monitor Holdings (Uk) Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@campaignmonitor.com"
+    tier: 2
+
+  - id: "carbon-creative-limited"
+    name: "Carbon Creative Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "martin@carboncreative.net"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Tomorrow, Salford, Greater Manchester, M50 2AB, GB', 'locality': 'Salford', 'postalCode': 'M50 2AB', 'region': 'Greater Manchester', 'street': 'Tomorrow'}; Advertising Services"
+
+  - id: "carpages-ca"
+    name: "Carpages.ca"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@carpages.ca"
+    opt_out_url: "https://www.carpages.ca/help/privacy/"
+    tier: 2
+    notes: "Mississauga; Advertising Services"
+
+  - id: "cdl-bh-c-mara-de-dirigentes-lojistas-de-belo-horizonte"
+    name: "Cdl/bh - câmara de dirigentes lojistas de belo horizonte"
+    region: "GLOBAL"
+    method: "email"
+    contact: "relacionamento@cdlbh.com.br"
+    opt_out_url: "https://www.cdlbh.com.br/politica-de-privacidade/"
+    tier: 2
+    notes: "Belo Horizonte, Minas Gerais; Information Services"
+
+  - id: "cedrec-information-systems-limited"
+    name: "Cedrec Information Systems Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "neilj@cedrec.com"
+    tier: 2
+    notes: "Birtley, Tyne & Wear; Information Services"
+
+  - id: "cheapair-com"
+    name: "CheapAir.com"
+    region: "GLOBAL"
+    method: "email"
+    contact: "help@cheapair.com"
+    opt_out_url: "https://www.cheapair.com/privacy"
+    tier: 2
+    notes: "Calabasas, CA; Technology, Information and Internet"
+
+  - id: "citizen-times"
+    name: "Citizen times"
+    region: "GLOBAL"
+    method: "email"
+    contact: "copyrights@gannett.com"
+    opt_out_url: "https://cm.citizen-times.com/privacy/"
+    tier: 2
+    notes: "Asheville, NC; Advertising Services"
+
+  - id: "civicscience"
+    name: "Civicscience"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@civicscience.com"
+    opt_out_url: "https://civicscience.com/privacy-policy/"
+    tier: 2
+    notes: "Pittsburgh, Pa; Market Research"
+
+  - id: "clearlink"
+    name: "Clearlink"
+    region: "GLOBAL"
+    method: "email"
+    contact: "email@address.com"
+    tier: 2
+    notes: "Salt Lake City, UT; Advertising Services"
+
+  - id: "clicktripz"
+    name: "ClickTripz"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@clicktripz.com"
+    opt_out_url: "http://www.clicktripz.com/privacy_policy.php"
+    tier: 2
+    notes: "Manhattan Beach, CA; Advertising Services"
+
+  - id: "coinmarketcap"
+    name: "Coinmarketcap"
+    region: "GLOBAL"
+    method: "email"
+    contact: "legal@coinmarketcap.com"
+    opt_out_url: "https://coinmarketcap.com/privacy/"
+    tier: 2
+    notes: "Delaware, DE; Information Services"
+
+  - id: "colorway-graphics-uk-limited"
+    name: "Colorway Graphics Uk Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "jason@colorwayprinting.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'undefined, undefined, undefined, undefined, GB'}; Advertising Services"
+
+  - id: "compart-marketing-e-tecnologia"
+    name: "Compart marketing e tecnologia"
+    region: "GLOBAL"
+    method: "email"
+    contact: "o@compart.com.br"
+    tier: 2
+    notes: "São Paulo; Advertising Services"
+
+  - id: "complete-medical-lists"
+    name: "Complete Medical Lists"
+    region: "GLOBAL"
+    method: "email"
+    contact: "tburnell@completemedicallists.com"
+    tier: 2
+    notes: "Franconia, NH; Advertising Services"
+
+  - id: "constant-contact"
+    name: "Constant Contact"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@constantcontact.com"
+    opt_out_url: "https://endurance.clarip.com/privacycenter/?brand=ctct"
+    tier: 2
+    notes: "Waltham, MA; Advertising Services"
+
+  - id: "copyright-clearance-center"
+    name: "Copyright Clearance Center"
+    region: "GLOBAL"
+    method: "email"
+    contact: "marketing@copyright.com"
+    opt_out_url: "http://www.copyright.com/about/privacy-policy/"
+    tier: 2
+    notes: "Danvers, MA; Information Services"
+
+  - id: "cxloyalty"
+    name: "Cxloyalty"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@cxloyalty.com"
+    opt_out_url: "https://www.cxloyalty.com/privacy-notice"
+    tier: 2
+    notes: "Stamford, Connecticut; Advertising Services"
+
+  - id: "data-facts-inc"
+    name: "Data Facts Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "johnna@datafacts.com"
+    opt_out_url: "https://www.datafacts.com/company-information-privacy-policy"
+    tier: 2
+    notes: "Cordova, Tennessee; Information Services"
+
+  - id: "datadirect-marketing-solutions"
+    name: "DataDirect Marketing Solutions"
+    region: "GLOBAL"
+    method: "email"
+    contact: "allan@datadirectmarketing.com"
+    tier: 2
+    notes: "Advertising Services"
+
+  - id: "definitive-healthcare"
+    name: "Definitive Healthcare"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@definitivehc.com"
+    tier: 2
+    notes: "Framingham, Massachusetts; Information Services"
+
+  - id: "denfield-advertising-marketing-limited"
+    name: "Denfield Advertising & Marketing Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@denfield.co.uk"
+    tier: 2
+    notes: "Leamington Spa; Advertising Services"
+
+  - id: "dietrichdirect-llc"
+    name: "Dietrichdirect, llc"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@dietrich-direct.com"
+    opt_out_url: "https://www.dietrich-direct.com/Privacy.htm"
+    tier: 2
+    notes: "Turner, ME; Advertising Services"
+
+  - id: "digitaling-com"
+    name: "Digitaling.com"
+    region: "GLOBAL"
+    method: "email"
+    contact: "editor@digitaling.com"
+    tier: 2
+    notes: "Shanghai, Shanghai; Advertising Services"
+
+  - id: "directmail-com"
+    name: "DirectMail.Com"
+    region: "GLOBAL"
+    method: "email"
+    contact: "media@directmail.com"
+    opt_out_url: "http://directmail.com/contact/"
+    tier: 2
+    notes: "Prince Frederick, Maryland; Advertising Services"
+
+  - id: "downdetector"
+    name: "Downdetector"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@ookla.com"
+    opt_out_url: "http://downdetector.com/privacy.html"
+    tier: 2
+    notes: "Information Services"
+
+  - id: "dun-bradstreet"
+    name: "Dun & Bradstreet"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacyofficer@dnb.com"
+    opt_out_url: "https://www.dnb.com/utility-pages/privacy-policy.html"
+    tier: 2
+    notes: "Jacksonville, FL; Information Services"
+
+  - id: "dynata-global-uk-ltd"
+    name: "Dynata Global UK Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@surveysampling.com"
+    tier: 2
+    notes: "Shelton, CT; Market Research"
+
+  - id: "ebsco"
+    name: "EBSCO"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@ebsco.com"
+    opt_out_url: "https://www.ebsco.com/company/privacy-policy"
+    tier: 2
+    notes: "Ipswich, MA; Information Services"
+
+  - id: "eenadu"
+    name: "Eenadu"
+    region: "GLOBAL"
+    method: "email"
+    contact: "editor@eenadu.net"
+    opt_out_url: "http://www.eenadu.net/privacy-policy.aspx"
+    tier: 2
+    notes: "Mumbai, Maharashtra; Advertising Services"
+
+  - id: "email-industries"
+    name: "Email Industries"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@emailindustries.com"
+    tier: 2
+    notes: "Augusta, GA; Advertising Services"
+
+  - id: "emailmovers-ltd"
+    name: "Emailmovers Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "compliance@emailmovers.com"
+    opt_out_url: "emailmovers.com/privacy-policy-emailmovers/"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'William Street Business Centre 7A Lower Clark Street, Scarborough, North Yorkshire, YO12 7PP, GB', 'locality': 'Scarborough', 'postalCode': 'YO12 7PP', 'region': 'North Yorkshire', 'street': 'William Street Business Centre 7A Lower Clark Street'}; Advertising Services"
+
+  - id: "enviou"
+    name: "Enviou"
+    region: "GLOBAL"
+    method: "email"
+    contact: "atendimento@enviou.com.br"
+    opt_out_url: "http://enviou.com.br/politica-de-privacidade"
+    tier: 2
+    notes: "São Paulo; Advertising Services"
+
+  - id: "epsilon"
+    name: "Epsilon"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@epsilon.com"
+    opt_out_url: "https://emea.epsilon.com/privacy-policy"
+    tier: 2
+
+  - id: "epsilon-conversantmedia"
+    name: "Epsilon"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@conversantmedia.com"
+    tier: 2
+
+  - id: "equifax-canada-co"
+    name: "Equifax canada co."
+    region: "GLOBAL"
+    method: "email"
+    contact: "mediarelationscanada@equifax.com"
+    tier: 2
+    notes: "Toronto, Ontario; Software Development"
+
+  - id: "escalent"
+    name: "Escalent"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@escalent.co"
+    opt_out_url: "https://escalent.co/privacy-policy/"
+    tier: 2
+    notes: "Livonia, MI; Market Research"
+
+  - id: "exclusive-media-limited"
+    name: "Exclusive Media Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "mike@exclusiverewards.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '17 Hoghton Street, Southport, England, PR9 0NS, GB', 'locality': 'Southport', 'postalCode': 'PR9 0NS', 'region': 'England', 'street': '17 Hoghton Street'}; Advertising Services"
+
+  - id: "experian-s-clarity-services"
+    name: "Experian's Clarity Services"
+    region: "GLOBAL"
+    method: "email"
+    contact: "salesdepartment@clarityservices.com"
+    opt_out_url: "https://www.clarityservices.com/privacy-principles/"
+    tier: 2
+    notes: "Clearwater, FL; Financial Services"
+
+  - id: "eyeota"
+    name: "Eyeota"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@eyeota.com"
+    tier: 2
+    notes: "Singapore; Advertising Services"
+
+  - id: "ezlocal"
+    name: "EZlocal"
+    region: "GLOBAL"
+    method: "email"
+    contact: "service@ezlocal.com"
+    opt_out_url: "http://ezlocal.com/about/privacy.aspx"
+    tier: 2
+    notes: "Lombard, IL; Advertising Services"
+
+  - id: "facebook-ireland-limited"
+    name: "Facebook Ireland Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@fb.com"
+    tier: 2
+
+  - id: "fccj-or-jp"
+    name: "Fccj.or.jp"
+    region: "GLOBAL"
+    method: "email"
+    contact: "front@fccj.or.jp"
+    tier: 2
+    notes: "Information Services"
+
+  - id: "feedblitz"
+    name: "FeedBlitz"
+    region: "GLOBAL"
+    method: "email"
+    contact: "abuse@feedblitz.com"
+    opt_out_url: "https://www.feedblitz.com/privacy"
+    tier: 2
+    notes: "Sudbury, Massachusetts; Advertising Services"
+
+  - id: "fizz-experience-limited"
+    name: "Fizz experience limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "service@warehousedemo.co.uk"
+    opt_out_url: "https://www.fizz.co.uk/privacy-policy/"
+    tier: 2
+    notes: "Dorking, Surrey; Advertising Services"
+
+  - id: "fmadata-com"
+    name: "fmadata.com"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@fmadata.com"
+    tier: 2
+    notes: "Boulder, Colorado; Advertising Services"
+
+  - id: "focus-usa"
+    name: "Focus USA"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@focus-usa.com"
+    tier: 2
+    notes: "Lakewood, CO; Advertising Services"
+
+  - id: "force-24-limited"
+    name: "Force 24 Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@force24.co.uk"
+    tier: 2
+    notes: "Leeds; Advertising Services"
+
+  - id: "fourth-floor-creative-limited"
+    name: "Fourth Floor Creative Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "catherine@fourthfloorcreative.co"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Queen Square, Bristol , Bristol , BS1 4NT, GB', 'locality': 'Bristol ', 'postalCode': 'BS1 4NT', 'region': 'Bristol ', 'street': 'Queen Square'}; Marketing Services"
+
+  - id: "glenigan-limited"
+    name: "Glenigan Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@glenigan.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '80 Holdenhurst Road, Bournemouth, Dorset, BH8 8AQ, GB', 'locality': 'Bournemouth', 'postalCode': 'BH8 8AQ', 'region': 'Dorset', 'street': '80 Holdenhurst Road'}; Information Services"
+
+  - id: "golf-town-canada"
+    name: "Golf Town Canada"
+    region: "GLOBAL"
+    method: "email"
+    contact: "marketing@golftown.com"
+    opt_out_url: "http://www.golftown.com:80/CustomerSupport.aspx?section=privacysecurity"
+    tier: 2
+    notes: "Honolulu, Hawaii; Advertising Services"
+
+  - id: "guthy-renker"
+    name: "Guthy-Renker"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@guthy-renker.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '100 North Pacific Coast Highway,  El Segundo, CA, 90245, US', 'locality': ' El Segundo', 'postalCode': '90245', 'region': 'CA', 'street': '100 North Pacific Coast Highway'}; Advertising Services"
+
+  - id: "harte-hanks"
+    name: "Harte Hanks"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@hartehanks.com"
+    opt_out_url: "http://www.hartehanks.com/privacy"
+    tier: 2
+    notes: "Chelmsford, MA; Advertising Services"
+
+  - id: "heaven-media-ltd"
+    name: "Heaven Media Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "mark@heavenmedia.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Heaven Media Ltd, Unit 4, kingfisher court, Huntingdon, Cambridgeshire, PE29 6AA, GB', 'locality': 'Huntingdon', 'postalCode': 'PE29 6AA', 'region': 'Cambridgeshire', 'street': 'Heaven Media Ltd, Unit 4, kingfisher court'}; Marketing Services"
+
+  - id: "hivestack"
+    name: "Hivestack"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@hivestack.com"
+    tier: 2
+    notes: "Montreal, Quebec; Advertising Services"
+
+  - id: "hobo-web"
+    name: "Hobo Web"
+    region: "GLOBAL"
+    method: "email"
+    contact: "mail@therapyadvertising.com"
+    opt_out_url: "https://www.hobo-web.co.uk/privacy-policy/"
+    tier: 2
+    notes: "Greenock, Scotland; Advertising Services"
+
+  - id: "homedata"
+    name: "HomeData"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy.compliance@deepsync.com"
+    opt_out_url: "deepsync.com/privacy-policy/"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '7120 185th Ave NE, Redmond, WA, 98052, US', 'locality': 'Redmond', 'postalCode': '98052', 'region': 'WA', 'street': '7120 185th Ave NE'}; Marketing Services"
+
+  - id: "homeowners-marketing-services"
+    name: "Homeowners Marketing Services"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dnm@homeownersmarketingservices.com"
+    tier: 2
+    notes: "North Hollywood, CA; Advertising Services"
+
+  - id: "horseshoe-hill-construction-inc"
+    name: "Horseshoe hill construction inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@yp.ca"
+    opt_out_url: "https://corporate.yp.ca/en/legal-notice/privacy-statement/"
+    tier: 2
+    notes: "Montreal, Quebec; Advertising Services"
+
+  - id: "hubspot"
+    name: "Hubspot"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@hubspot.com"
+    opt_out_url: "https://legal.hubspot.com/privacy-policy"
+    tier: 2
+    notes: "Cambridge, Massachusetts; Software Development"
+
+  - id: "humaniti"
+    name: "Humaniti"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@humaniti.com"
+    tier: 2
+    notes: "Lavender Bay, New South Wales; Information Services"
+
+  - id: "hybrid-news-limited"
+    name: "Hybrid News Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "chris@hybrid.co"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '46-48, Bristol, undefined, BS1 4HX, GB', 'locality': 'Bristol', 'postalCode': 'BS1 4HX', 'street': '46-48'}; Advertising Services"
+
+  - id: "ieee-globalspec-inc"
+    name: "IEEE GlobalSpec Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "webmaster@ieeeglobalspec.com"
+    opt_out_url: "https://www.globalspec.com/help/privacy"
+    tier: 2
+    notes: "Albany, NY; Advertising Services"
+
+  - id: "infospectrum-ltd"
+    name: "Infospectrum Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@infospectrum.net"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '60 St Aldates, Oxford, undefined, OX1 1ST, GB', 'locality': 'Oxford', 'postalCode': 'OX1 1ST', 'street': '60 St Aldates'}; Information Services"
+
+  - id: "infotv-comunica-es"
+    name: "Infotv comunicações"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@infotv.com.br"
+    opt_out_url: "https://infotv.com.br/politica-de-privacidade/"
+    tier: 2
+    notes: "Florianópolis, SC; Advertising Services"
+
+  - id: "inist"
+    name: "Inist"
+    region: "GLOBAL"
+    method: "email"
+    contact: "vous@exemple.fr"
+    tier: 2
+    notes: "Vandœuvre-lès-Nancy; Information Services"
+
+  - id: "inmobi"
+    name: "Inmobi"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@inmobi.com"
+    tier: 2
+    notes: "Singapore; Advertising Services"
+
+  - id: "instantcheckmate"
+    name: "InstantCheckmate"
+    region: "GLOBAL"
+    method: "email"
+    contact: "unsubscribe@instantcheckmate.com"
+    opt_out_url: "https://www.instantcheckmate.com/privacy-policy/"
+    tier: 2
+    notes: "San Diego, CA; Consumer Services"
+
+  - id: "institutional-shareholder-services-inc"
+    name: "Institutional Shareholder Services Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "dataprotectionofficer@issgovernance.com"
+    tier: 2
+    notes: "Paramus, NEW JERSEY; Advertising Services"
+
+  - id: "intalytics"
+    name: "Intalytics"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@intalytics.com"
+    tier: 2
+    notes: "Ann Arbor, MI; Market Research"
+
+  - id: "integrated-medical-data"
+    name: "Integrated Medical Data"
+    region: "GLOBAL"
+    method: "email"
+    contact: "bzink@integratedmedicaldata.com"
+    tier: 2
+    notes: "Information Services"
+
+  - id: "intellectads"
+    name: "IntellectAds"
+    region: "GLOBAL"
+    method: "email"
+    contact: "sales@intellectads.co.in"
+    opt_out_url: "http://www.intellectads.co.in/privacy.asp"
+    tier: 2
+    notes: "Gurugram, Haryana; Advertising Services"
+
+  - id: "interactive-results"
+    name: "Interactive Results"
+    region: "GLOBAL"
+    method: "email"
+    contact: "compliance@interactiveresults.co.uk"
+    opt_out_url: "https://www.interactiveresults.co.uk/privacy-policy"
+    tier: 2
+    notes: "GLASGOW; Advertising Services"
+
+  - id: "intermarketing-agency-ltd"
+    name: "Intermarketing Agency Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo-relgroup@advantagesmollan.com"
+    tier: 2
+    notes: "Winnersh, England; Advertising Services"
+
+  - id: "internet-lightspeed-communications"
+    name: "Internet lightspeed communications"
+    region: "GLOBAL"
+    method: "email"
+    contact: "billing@lightspeed.ca"
+    tier: 2
+    notes: "Burnaby, British Columbia; Information Services"
+
+  - id: "intouch-solutions"
+    name: "Intouch solutions"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@intouchg.com"
+    opt_out_url: "https://www.intouchg.com/privacy-policy/"
+    tier: 2
+    notes: "Overland Park, KS; Advertising Services"
+
+  - id: "invacare-canada-l-p"
+    name: "Invacare canada l.p."
+    region: "GLOBAL"
+    method: "email"
+    contact: "ecommsupport@invacare.com"
+    tier: 2
+    notes: "Mississauga, Ontario; Advertising Services"
+
+  - id: "ipros-corporation"
+    name: "Ipros corporation"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@ipros.jp"
+    opt_out_url: "https://www.ipros.jp/privacy/"
+    tier: 2
+    notes: "Minato-ku, Tokyo; Information Services"
+
+  - id: "islamic-finder"
+    name: "Islamic Finder"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@islamicfinder.org"
+    opt_out_url: "https://www.islamicfinder.org/privacypolicy/"
+    tier: 2
+    notes: "Philadelphia, Pennsylvania; Advertising Services"
+
+  - id: "ispot-tv-inc"
+    name: "iSpot.tv Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy+ispot@ispot.tv"
+    opt_out_url: "https://www.ispot.tv/privacy"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '15831 NE 8th St., Bellevue, WA, 98008, US', 'locality': 'Bellevue', 'postalCode': '98008', 'region': 'WA', 'street': '15831 NE 8th St.'}; Advertising Services"
+
+  - id: "iwco-direct"
+    name: "Iwco direct"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@iwco.com"
+    opt_out_url: "https://www.iwco.com/privacy-policy/"
+    tier: 2
+    notes: "Chanhassen, MN; Advertising Services"
+
+  - id: "j-d-power-and-associates"
+    name: "J. D. Power and Associates"
+    region: "GLOBAL"
+    method: "email"
+    contact: "jdpowerprivacy@jdpa.com"
+    opt_out_url: "http://www.jdpower.com/privacy"
+    tier: 2
+    notes: "Troy, MI; Information Services"
+
+  - id: "jobshq"
+    name: "Jobshq"
+    region: "GLOBAL"
+    method: "email"
+    contact: "jobs@jobshq.com"
+    opt_out_url: "https://www.jobshq.com/privacy-policy/"
+    tier: 2
+    notes: "Fargo, North Dakota; Advertising Services"
+
+  - id: "king-marketing-group"
+    name: "King Marketing Group"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@kingmarketinggroup.com"
+    tier: 2
+    notes: "Olathe, KS; Advertising Services"
+
+  - id: "komodo-media-limited"
+    name: "Komodo Media Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "andy@wearekomodo.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '120 Regent Street, West End, England, W1B 5FE, GB', 'locality': 'West End', 'postalCode': 'W1B 5FE', 'region': 'England', 'street': '120 Regent Street'}; Advertising Services"
+
+  - id: "kompass"
+    name: "Kompass"
+    region: "GLOBAL"
+    method: "email"
+    contact: "login@login.com"
+    tier: 2
+    notes: "Sèvres; Information Services"
+
+  - id: "kyc-data"
+    name: "KYC Data"
+    region: "GLOBAL"
+    method: "email"
+    contact: "kyc@kycdata.com"
+    tier: 2
+    notes: "Cumming, GA; Advertising Services"
+
+  - id: "lake-b2b"
+    name: "Lake B2B"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@lakeb2b.com"
+    tier: 2
+    notes: "NY; Advertising Services"
+
+  - id: "lexisnexis-canada-inc"
+    name: "Lexisnexis canada inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "sales@lexisnexis.ca"
+    tier: 2
+    notes: "Toronto, ON; IT Services and IT Consulting"
+
+  - id: "lexisnexis-risk-solutions-fl-inc"
+    name: "LexisNexis Risk Solutions FL Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@lexisnexisrisk.com"
+    tier: 2
+
+  - id: "liftengine"
+    name: "LiftEngine"
+    region: "GLOBAL"
+    method: "email"
+    contact: "emailprivacy@liftbasedata.com"
+    tier: 2
+    notes: "Pearl River, NY; Advertising Services"
+
+  - id: "link-scheme-ltd"
+    name: "Link Scheme Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "tsleight@link.co.uk"
+    tier: 2
+    notes: "Leeds; Information Services"
+
+  - id: "list-service-direct-inc"
+    name: "List Service Direct Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "spalilla@listservicedirect.com"
+    tier: 2
+    notes: "Richmond, VA; Advertising Services"
+
+  - id: "locatesmarter"
+    name: "LocateSmarter"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@locatesmarter.com"
+    tier: 2
+    notes: "Cedar Falls, Iowa; Information Services"
+
+  - id: "loom-digital-ltd"
+    name: "Loom Digital Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "nikki@loomdigital.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Unit 2.2 Temple Studios, Bristol, Bristol, BS1 6QA, GB', 'locality': 'Bristol', 'postalCode': 'BS1 6QA', 'region': 'Bristol', 'street': 'Unit 2.2 Temple Studios'}; Advertising Services"
+
+  - id: "lotame"
+    name: "Lotame"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@lotame.com"
+    tier: 2
+    notes: "Columbia, MD; Software Development"
+
+  - id: "macon"
+    name: "Macon"
+    region: "GLOBAL"
+    method: "email"
+    contact: "feedback@macon.com"
+    opt_out_url: "http://www.macon.com/customer-service/privacy-policy/"
+    tier: 2
+    notes: "Macon, GA; Advertising Services"
+
+  - id: "macromill"
+    name: "Macromill"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@macromill.com"
+    opt_out_url: "https://www.macromill.com/privacy.html"
+    tier: 2
+    notes: "港区, 東京都; Market Research"
+
+  - id: "magnite-inc"
+    name: "Magnite Inc"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@taceo.co.uk"
+    tier: 2
+
+  - id: "maritz"
+    name: "Maritz"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@maritz.com"
+    opt_out_url: "https://www.maritz.com/Legal"
+    tier: 2
+    notes: "St. Louis, MO; Advertising Services"
+
+  - id: "market-force-corporation"
+    name: "Market Force Corporation"
+    region: "GLOBAL"
+    method: "email"
+    contact: "maejames@marketforcecorp.com"
+    opt_out_url: "marketforcecorp.com/privacy-policy/"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '5248 Abelia Dr, Orlando, FL, 32819, US', 'locality': 'Orlando', 'postalCode': '32819', 'region': 'FL', 'street': '5248 Abelia Dr'}; Advertising Services"
+
+  - id: "marketingprofs"
+    name: "MarketingProfs"
+    region: "GLOBAL"
+    method: "email"
+    contact: "you@company.com"
+    opt_out_url: "https://www.marketingprofs.com/about/privacy"
+    tier: 2
+    notes: "Mount Pleasant, SC; Advertising Services"
+
+  - id: "marketingsherpa"
+    name: "Marketingsherpa"
+    region: "GLOBAL"
+    method: "email"
+    contact: "service@meclabs.com"
+    opt_out_url: "http://marketingsherpa.com/privacy"
+    tier: 2
+    notes: "Jacksonville, FL; Advertising Services"
+
+  - id: "matomo"
+    name: "Matomo"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@matomo.org"
+    opt_out_url: "https://matomo.org/privacy-policy/"
+    tier: 2
+
+  - id: "max-drone-brasil"
+    name: "Max drone brasil"
+    region: "GLOBAL"
+    method: "email"
+    contact: "contato@maxdrone.com.br"
+    tier: 2
+    notes: "São Paulo; Advertising Services"
+
+  - id: "maxbounty"
+    name: "MaxBounty"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@maxbounty.com"
+    opt_out_url: "http://maxbounty.com/privacy.cfm"
+    tier: 2
+    notes: "Ottawa, Ontario; Advertising Services"
+
+  - id: "maze-media-limited"
+    name: "Maze Media Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "david@mazemedia.co.uk"
+    tier: 2
+    notes: '{''country'': ''GB'', ''fullAddress'': "20a Tuesday Market Place, King''s Lynn, Norfolk, PE30 1JW, GB", ''locality'': "King''s Lynn", ''postalCode'': ''PE30 1JW'', ''region'': ''Norfolk'', ''street'': ''20a Tuesday Market Place''}; Advertising Services'
+
+  - id: "mch-inc"
+    name: "Mch Inc"
+    region: "GLOBAL"
+    method: "email"
+    contact: "peterlong@mchdata.com"
+    opt_out_url: "https://mchdata.com/privacy-policy/"
+    tier: 2
+    notes: "Overland Park, Kansas; Advertising Services"
+
+  - id: "mediazod-llc"
+    name: "Mediazod LLC"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@leadzod.com"
+    tier: 2
+    notes: "Advertising Services"
+
+  - id: "mikrotik"
+    name: "mikrotik"
+    region: "GLOBAL"
+    method: "email"
+    contact: "sales@mikrotik.com"
+    opt_out_url: "https://mikrotik.com/privacy"
+    tier: 2
+    notes: "Rīga, Rīga; Information Services"
+
+  - id: "mobidea"
+    name: "Mobidea"
+    region: "GLOBAL"
+    method: "email"
+    contact: "legal@olamobile.com"
+    opt_out_url: "https://www.mobidea.com/privacy/"
+    tier: 2
+    notes: "Nicosia, Nicosia; Advertising Services"
+
+  - id: "mobile-technology-corporation"
+    name: "Mobile Technology Corporation"
+    region: "GLOBAL"
+    method: "email"
+    contact: "accounting@onspotdata.com"
+    opt_out_url: "https://www.onspotdata.com/privacy-policy/"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '7173 S Havana St, Centennial, CO, 80112, US', 'locality': 'Centennial', 'postalCode': '80112', 'region': 'CO', 'street': '7173 S Havana St'}; Marketing Services"
+
+  - id: "mobvista"
+    name: "Mobvista"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@mobvista.com"
+    opt_out_url: "https://www.mobvista.com/en/privacy/"
+    tier: 2
+    notes: "Guangzhou, Guangdong; Advertising Services"
+
+  - id: "modfx-labs-private-limited"
+    name: "ModFx Labs Private Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "mandeep@modfxlabs.com"
+    tier: 2
+    notes: "Jacksonville, FL; Advertising Services"
+
+  - id: "modo25-limited"
+    name: "Modo25 Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "abi@modo25.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'One Embankment, Leeds, West Yorkshire, LS1 4DW, GB', 'locality': 'Leeds', 'postalCode': 'LS1 4DW', 'region': 'West Yorkshire', 'street': 'One Embankment'}; Advertising Services"
+
+  - id: "mon-net-br"
+    name: "Mon.net.br"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacidade@monetizze.com.br"
+    opt_out_url: "https://www.monetizze.com.br/termos"
+    tier: 2
+    notes: "Nova Serrana; Advertising Services"
+
+  - id: "moonshot-cve-holdings-ltd"
+    name: "Moonshot Cve Holdings Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "grant@moonshotcve.com"
+    tier: 2
+    notes: "{'cityStatePostalCountry': '66 PRESCOT STREET', 'fullAddress': '66 PRESCOT STREET, 66 PRESCOT STREET', 'getDirectionsLink': 'https://www.bing.com/maps?where=66+PRESCOT+STREET+E1+8NN+GB&trk=org-locations_url', 'street': '66 PRESCOT STREET'}; Information Services"
+
+  - id: "multimedia-international-services-limited"
+    name: "Multimedia International Services Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "rwhipp@direct.digital"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Premier way, Poulton Business park, Poulton le Fylde , Lancashire, FY6 8JP, GB', 'locality': 'Poulton le Fylde ', 'postalCode': 'FY6 8JP', 'region': 'Lancashire', 'street': 'Premier way, Poulton Business park'}; Advertising Services"
+
+  - id: "multiview"
+    name: "MultiView"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dataprivacyoffice@multiview.com"
+    opt_out_url: "https://www.multiview.com/privacy-policy/"
+    tier: 2
+    notes: "Irving, TX; Advertising Services"
+
+  - id: "namecheap-com"
+    name: "Namecheap.com"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@namecheap.com"
+    opt_out_url: "https://www.namecheap.com/legal/general/privacy-cookies/"
+    tier: 2
+    notes: "Phoenix , Arizona; IT Services and IT Consulting"
+
+  - id: "national-pen"
+    name: "National pen"
+    region: "GLOBAL"
+    method: "email"
+    contact: "customercare@pens.com"
+    opt_out_url: "https://www.pens.com/privacy-national-pen"
+    tier: 2
+    notes: "San Diego, CA; Advertising Services"
+
+  - id: "nemoa-share-learn-connect"
+    name: "Nemoa share. learn. connect."
+    region: "GLOBAL"
+    method: "email"
+    contact: "jo@nemoa.org"
+    tier: 2
+    notes: "Wellesley Hills, MA; Advertising Services"
+
+  - id: "neptune-retail-solutions"
+    name: "Neptune Retail Solutions"
+    region: "GLOBAL"
+    method: "email"
+    contact: "legal@neptuneretailsolutions.com"
+    tier: 2
+    notes: "Jersey City, New Jersey; Advertising Services"
+
+  - id: "netbiz-hosting-limited"
+    name: "Netbiz Hosting Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "will@netbizgroup.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Scott Street, Newcastle-under-Lyme, Staffordshire, ST5 1AR, GB', 'locality': 'Newcastle-under-Lyme', 'postalCode': 'ST5 1AR', 'region': 'Staffordshire', 'street': 'Scott Street'}; Advertising Services"
+
+  - id: "netwise"
+    name: "NetWise"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@netwisedata.com"
+    tier: 2
+    notes: "Boca Raton, FL; Information Services"
+
+  - id: "next-wave-marketing-strategies-inc"
+    name: "Next Wave Marketing Strategies Inc"
+    region: "GLOBAL"
+    method: "email"
+    contact: "troy@nextwavemarketingstrategies.com"
+    opt_out_url: "agedleadstore.com/privacy-notice-for-california-residents/"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '6789 Quail Hill Pkwy #118, Irvine, CA, 92603, US', 'locality': 'Irvine', 'postalCode': '92603', 'region': 'CA', 'street': '6789 Quail Hill Pkwy #118'}; Advertising Services"
+
+  - id: "nfocus-consulting"
+    name: "NFocus Consulting"
+    region: "GLOBAL"
+    method: "email"
+    contact: "sales@n-focus.com"
+    tier: 2
+    notes: "Lancaster, OH; Advertising Services"
+
+  - id: "old-republic-international-corporation"
+    name: "Old republic international corporation"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@oldrepublic.com"
+    opt_out_url: "https://www.oldrepublic.com/legal-and-privacy-notices"
+    tier: 2
+    notes: "Snellville, Georgia; Advertising Services"
+
+  - id: "orderry"
+    name: "Orderry"
+    region: "GLOBAL"
+    method: "email"
+    contact: "help@orderry.com"
+    tier: 2
+    notes: "Information Services"
+
+  - id: "pacificeast"
+    name: "PacificEast"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@pacificeast.com"
+    tier: 2
+    notes: "Beaverton, OR; Information Services"
+
+  - id: "paisawapas"
+    name: "Paisawapas"
+    region: "GLOBAL"
+    method: "email"
+    contact: "cs@paisawapas.com"
+    tier: 2
+    notes: "Bangalore, Karnataka; Advertising Services"
+
+  - id: "path2response"
+    name: "Path2Response"
+    region: "GLOBAL"
+    method: "email"
+    contact: "invoices@path2response.com"
+    opt_out_url: "https://path2response.com/privacy/"
+    tier: 2
+    notes: "Broomfield, Colorado; Advertising Services"
+
+  - id: "pellacraft-limited"
+    name: "Pellacraft Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@pellacraft.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Hermitage Way, Mansfield , Nottinghamshire, NG18 5ES, GB', 'locality': 'Mansfield ', 'postalCode': 'NG18 5ES', 'region': 'Nottinghamshire', 'street': 'Hermitage Way'}; Advertising Services"
+
+  - id: "peoplefindersdaas-com"
+    name: "peoplefindersdaas.com"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@peoplefindersdaas.com"
+    tier: 2
+
+  - id: "percussion-group-limited"
+    name: "Percussion Group Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "nell@sleepinggiantmedia.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Top floor the Civic Centre, Folkestone, Kent, CT20 2QY, GB', 'locality': 'Folkestone', 'postalCode': 'CT20 2QY', 'region': 'Kent', 'street': 'Top floor the Civic Centre'}; Advertising Services"
+
+  - id: "petscreening"
+    name: "Petscreening"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@petscreening.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '603 S Church St, Mooresville, NC, 28115, US', 'locality': 'Mooresville', 'postalCode': '28115', 'region': 'NC', 'street': '603 S Church St'}; Information Services"
+
+  - id: "phillyadclub"
+    name: "Phillyadclub"
+    region: "GLOBAL"
+    method: "email"
+    contact: "office@phillyadclub.com"
+    tier: 2
+    notes: "Philadelphia, PA; Advertising Services"
+
+  - id: "pool-data-payments-ltd"
+    name: "Pool Data Payments Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "john@pooldata.io"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '1 Poultry, Moorgate, England, EC2R 8EJ, GB', 'locality': 'Moorgate', 'postalCode': 'EC2R 8EJ', 'region': 'England', 'street': '1 Poultry'}; Information Services"
+
+  - id: "pop-acta-media-llc"
+    name: "Pop Acta Media LLC"
+    region: "GLOBAL"
+    method: "email"
+    contact: "legal@popacta.com"
+    tier: 2
+    notes: "Advertising Services"
+
+  - id: "prizerebel"
+    name: "Prizerebel"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@prizerebel.com"
+    tier: 2
+    notes: "Market Research"
+
+  - id: "psiphon-inc"
+    name: "Psiphon inc"
+    region: "GLOBAL"
+    method: "email"
+    contact: "fb-bot-privacy@psiphon.ca"
+    opt_out_url: "https://psiphon.ca/fbbotprivacypolicy.html"
+    tier: 2
+    notes: "Toronto, Ontario; Information Services"
+
+  - id: "purespectrum-uk-limited"
+    name: "Purespectrum Uk Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "stephen@purespectrum.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '31416 Agoura Rd, Suite 105, Westlake Village, CA, 91361, US', 'locality': 'Westlake Village', 'postalCode': '91361', 'region': 'CA', 'street': '31416 Agoura Rd, Suite 105'}; Market Research"
+
+  - id: "push-interactive"
+    name: "Push Interactive"
+    region: "GLOBAL"
+    method: "email"
+    contact: "compliance@pushint.com"
+    tier: 2
+    notes: "Minneapolis, Minnesota; Advertising Services"
+
+  - id: "pushengage"
+    name: "PushEngage"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@pushengage.com"
+    opt_out_url: "https://www.pushengage.com/privacy"
+    tier: 2
+    notes: "Wilmington, DELAWARE; Advertising Services"
+
+  - id: "q-r-s-market-research-limited"
+    name: "Q R S Market Research Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@qrs-research.co.uk"
+    tier: 2
+    notes: "Hertford, Herts; Market Research"
+
+  - id: "quad"
+    name: "Quad"
+    region: "GLOBAL"
+    method: "email"
+    contact: "compliancedept@quad.com"
+    tier: 2
+    notes: "Sussex, Wisconsin; Advertising Services"
+
+  - id: "quinstreet"
+    name: "QuinStreet"
+    region: "GLOBAL"
+    method: "email"
+    contact: "legalq@quinstreet.com"
+    tier: 2
+    notes: "Foster City, CA; Advertising Services"
+
+  - id: "ratsit"
+    name: "Ratsit"
+    region: "GLOBAL"
+    method: "email"
+    contact: "kundservice@ratsit.se"
+    tier: 2
+    notes: "Mölndal, Sverige; Information Services"
+
+  - id: "recruitics-uk-ltd"
+    name: "Recruitics Uk, Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "prasith@recruitics.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '230 East Ave, Norwalk, CT, 06855, US', 'locality': 'Norwalk', 'postalCode': '06855', 'region': 'CT', 'street': '230 East Ave'}; Advertising Services"
+
+  - id: "relymedia"
+    name: "Relymedia"
+    region: "GLOBAL"
+    method: "email"
+    contact: "sales@relymedia.com"
+    opt_out_url: "https://www.relymedia.com/privacy-policy/"
+    tier: 2
+    notes: "Wayzata, Minnesota; Advertising Services"
+
+  - id: "resonate"
+    name: "Resonate"
+    region: "GLOBAL"
+    method: "email"
+    contact: "customersupport@resonate.com"
+    tier: 2
+    notes: "Reston, VA; Market Research"
+
+  - id: "retargetly"
+    name: "Retargetly"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@retargetly.com"
+    tier: 2
+    notes: "Miami, FL; Advertising Services"
+
+  - id: "reveal-mobile-inc"
+    name: "Reveal Mobile Inc"
+    region: "GLOBAL"
+    method: "email"
+    contact: "andy@revealmobile.com"
+    opt_out_url: "https://revealmobile.com/privacy/"
+    tier: 2
+    notes: "Raleigh, North Carolina; Advertising Services"
+
+  - id: "royal-hygiene"
+    name: "ROYAL HYGIENE"
+    region: "GLOBAL"
+    method: "email"
+    contact: "helpdesk@tradeindia.com"
+    opt_out_url: "https://www.tradeindia.com/privacy_policy.html"
+    tier: 2
+    notes: "Noida, Delhi; Advertising Services"
+
+  - id: "schufa-holding-ag"
+    name: "Schufa Holding Ag"
+    region: "GLOBAL"
+    method: "email"
+    contact: "meineschufa@schufa.de"
+    tier: 2
+    notes: "Financial Services"
+
+  - id: "screaming-frog"
+    name: "Screaming frog"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@screamingfrog.co.uk"
+    opt_out_url: "https://www.screamingfrog.co.uk/privacy/"
+    tier: 2
+    notes: "Henley-on-Thames, England; Advertising Services"
+
+  - id: "seed-publicity-limited"
+    name: "Seed Publicity Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "robin@helloseed.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '19 New Road, Brighton, England, BN1 1UF, GB', 'locality': 'Brighton', 'postalCode': 'BN1 1UF', 'region': 'England', 'street': '19 New Road'}; Advertising Services"
+
+  - id: "semcasting"
+    name: "Semcasting"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacychoice@semcasting.com"
+    tier: 2
+    notes: "North Andover, MA; Advertising Services"
+
+  - id: "shift-active-media-limited"
+    name: "Shift Active Media Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "data@shiftactivemedia.com"
+    tier: 2
+    notes: "Bath, England; Advertising Services"
+
+  - id: "shopmetrics-inc"
+    name: "Shopmetrics Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "sales@shopmetrics.com"
+    opt_out_url: "https://shopmetrics.com/Privacy_Policy.asp"
+    tier: 2
+    notes: "Sylvania, Ohio; Market Research"
+
+  - id: "sift-limited"
+    name: "Sift Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@sift.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Bridge House, Bristol, Avon, BS1 1QB, GB', 'locality': 'Bristol', 'postalCode': 'BS1 1QB', 'region': 'Avon', 'street': 'Bridge House'}; Internet Publishing"
+
+  - id: "snapchat-com"
+    name: "Snapchat.com"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@snap.com"
+    opt_out_url: "https://snap.com/en-US/privacy/privacy-center/"
+    tier: 2
+
+  - id: "social-catfish-llc"
+    name: "Social Catfish Llc"
+    region: "GLOBAL"
+    method: "email"
+    contact: "welcome@socialcatfish.com"
+    opt_out_url: "https://socialcatfish.com/faq/privacy/"
+    tier: 2
+    notes: "Murrieta, CA; Information Services"
+
+  - id: "sourceit-marketing"
+    name: "SOURCEit Marketing"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dataprivacy@sourceitmarketing.com"
+    tier: 2
+    notes: "Wheaton, Illinois; Advertising Services"
+
+  - id: "sovrn-holdings"
+    name: "Sovrn Holdings"
+    region: "GLOBAL"
+    method: "email"
+    contact: "aking@sovrn.com"
+    tier: 2
+    notes: "Boulder, Colorado; Software Development"
+
+  - id: "spar-brasil"
+    name: "Spar brasil"
+    region: "GLOBAL"
+    method: "email"
+    contact: "ouvidoria@sparbrasil.com"
+    opt_out_url: "https://sparbrasil.com.br/politica-de-privacidade/"
+    tier: 2
+    notes: "São Paulo, SÃO PAULO; Advertising Services"
+
+  - id: "spark-market-research-uk-limited"
+    name: "Spark Market Research (Uk) Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "lynsey@sparkmr.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'undefined, Leeds, undefined, undefined, GB', 'locality': 'Leeds'}; Market Research"
+
+  - id: "spc-card"
+    name: "Spc Card"
+    region: "GLOBAL"
+    method: "email"
+    contact: "questions@spccard.ca"
+    tier: 2
+    notes: "{'country': 'CA', 'fullAddress': '999 Edgeley Blvd, Vaughan, undefined, L4K 5Z4, CA', 'locality': 'Vaughan', 'postalCode': 'L4K 5Z4', 'street': '999 Edgeley Blvd'}; Advertising Services"
+
+  - id: "special-bar-service-ltd"
+    name: "Special Bar Service Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "melanie@specialbarservice.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '5 pershore trading estate, Pershore, undefined, undefined, GB', 'locality': 'Pershore', 'street': '5 pershore trading estate'}; Advertising Services"
+
+  - id: "speed-communications-agency-limited"
+    name: "Speed Communications Agency Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "msolomon@themission.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'The Old Sawmills, Filleigh, undefined, EX32 0RN, GB', 'locality': 'Filleigh', 'postalCode': 'EX32 0RN', 'street': 'The Old Sawmills'}; Advertising Services"
+
+  - id: "statlistics"
+    name: "Statlistics"
+    region: "GLOBAL"
+    method: "email"
+    contact: "michael@alescodata.com"
+    tier: 2
+    notes: "Danbury, CT; Advertising Services"
+
+  - id: "strategic-information-resources"
+    name: "Strategic Information Resources"
+    region: "GLOBAL"
+    method: "email"
+    contact: "jdrziak@strategicinfo.com"
+    opt_out_url: "https://strategicinfo.com/wp-content/uploads/SIR_Privacy_Statement-Jan2016.pdf"
+    tier: 2
+    notes: "Holyoke, Massachusetts; Information Services"
+
+  - id: "summit-resources-llc"
+    name: "Summit Resources LLC"
+    region: "GLOBAL"
+    method: "email"
+    contact: "legal@clientcommand.com"
+    opt_out_url: "clientcommand.com/client-command-privacy-notice/"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '410 Peachtree Parkway, Cumming, Georgia, 30041, US', 'locality': 'Cumming', 'postalCode': '30041', 'region': 'Georgia', 'street': '410 Peachtree Parkway'}; Advertising Services"
+
+  - id: "svenska-handelsbanken-sa-luxembourg-branch"
+    name: "Svenska handelsbanken sa (luxembourg branch)"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@handelsbanken.se"
+    opt_out_url: "https://www.handelsbanken.com/en/privacy-notice"
+    tier: 2
+
+  - id: "synduit"
+    name: "Synduit"
+    region: "GLOBAL"
+    method: "email"
+    contact: "legal@synduit.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '145 Cedar Lane, Englewood, NJ, 07631, US', 'locality': 'Englewood', 'postalCode': '07631', 'region': 'NJ', 'street': '145 Cedar Lane'}; Advertising Services"
+
+  - id: "t-mobile-usa-inc"
+    name: "T-Mobile USA, Inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "mmp-privacy@t-mobile.com"
+    tier: 2
+    notes: "Fairfield, New Jersey; Advertising Services"
+
+  - id: "techtarget"
+    name: "TechTarget"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@techatarget.com"
+    opt_out_url: "https://www.techtarget.com/privacy-policy-may25/"
+    tier: 2
+    notes: "Newton, MA; Advertising Services"
+
+  - id: "teignbridge-district-council"
+    name: "Teignbridge District Council"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dataprotection@teignbridge.gov.uk"
+    tier: 2
+    notes: "Newton Abbot, Devon; Information Services"
+
+  - id: "teikoku-databank-ltd"
+    name: "Teikoku databank, ltd."
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@mail.tdb.co.jp"
+    opt_out_url: "https://www.tdb.co.jp/privacy/index.html"
+    tier: 2
+    notes: "Information Services"
+
+  - id: "textbroker"
+    name: "Textbroker"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@textbroker.eu"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '8076 West Sahara Avenue Suite 200, Las Vegas, NV, 89117, US', 'locality': 'Las Vegas', 'postalCode': '89117', 'region': 'NV', 'street': '8076 West Sahara Avenue Suite 200'}; Internet Publishing"
+
+  - id: "the-brit-agency"
+    name: "The Brit Agency"
+    region: "GLOBAL"
+    method: "email"
+    contact: "david@thebritagency.com"
+    tier: 2
+    notes: "{'country': 'CA', 'fullAddress': '140 Yonge St, Toronto, Ontario, M5C 1X6, CA', 'locality': 'Toronto', 'postalCode': 'M5C 1X6', 'region': 'Ontario', 'street': '140 Yonge St'}; Advertising Services"
+
+  - id: "the-numbers"
+    name: "The Numbers"
+    region: "GLOBAL"
+    method: "email"
+    contact: "unsubscribe@the-numbers.com"
+    opt_out_url: "https://www.the-numbers.com/legal/privacy.html"
+    tier: 2
+    notes: "Saint Helens, England; Advertising Services"
+
+  - id: "the-trade-desk"
+    name: "The Trade Desk"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@thetradedesk.com"
+    opt_out_url: "https://www.thetradedesk.com/general/website-privacy-policy"
+    tier: 2
+    notes: "Ventura, CA; Software Development"
+
+  - id: "theorem"
+    name: "Theorem"
+    region: "GLOBAL"
+    method: "email"
+    contact: "gdprprivacymanager@theoreminc.net"
+    opt_out_url: "https://theoreminc.net/privacy-terms/"
+    tier: 2
+    notes: "Chatham, NJ; Advertising Services"
+
+  - id: "this-is-digital"
+    name: "This Is Digital"
+    region: "GLOBAL"
+    method: "email"
+    contact: "andy@thisisdigital.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '12 Blackfriars Street, Manchester, England, undefined, GB', 'locality': 'Manchester', 'region': 'England', 'street': '12 Blackfriars Street'}; Advertising Services"
+
+  - id: "thomsonreuters-co-jp"
+    name: "Thomsonreuters.co.jp"
+    region: "GLOBAL"
+    method: "email"
+    contact: "marketingjp@thomsonreuters.com"
+    tier: 2
+    notes: "港区, 東京都; Information Services"
+
+  - id: "throtle"
+    name: "Throtle"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@throtle.io"
+    tier: 2
+    notes: "Red Bank, NJ; Advertising Services"
+
+  - id: "titan-ignite-limited"
+    name: "Titan Ignite Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "tara@scalewithignite.com"
+    tier: 2
+    notes: "Advertising Services"
+
+  - id: "toluna"
+    name: "Toluna"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@toluna.com"
+    opt_out_url: "https://tolunacorporate.com/legal/privacy-policy/"
+    tier: 2
+    notes: "Norwalk, CT; Market Research"
+
+  - id: "topcon-great-britain-medical-branch-of-topcon-europe-medical-b-v"
+    name: "Topcon Great Britain Medical, Branch Of Topcon Europe Medical B.V."
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@topcon.com"
+    tier: 2
+
+  - id: "towerdata"
+    name: "TowerData"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@towerdata.com"
+    opt_out_url: "http://towerdata.com/company/privacy_policy"
+    tier: 2
+
+  - id: "transunion-international-uk-limited"
+    name: "TransUnion International UK Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@transunion.co.uk"
+    tier: 2
+
+  - id: "travel-insurance-facilities-plc"
+    name: "Travel Insurance Facilities PLC"
+    region: "GLOBAL"
+    method: "email"
+    contact: "mark@mojou.co.uk"
+    tier: 2
+    notes: "Lee on Solent, County (optional); Information Services"
+
+  - id: "tribute-entertainment-media-group"
+    name: "Tribute entertainment media group"
+    region: "GLOBAL"
+    method: "email"
+    contact: "generalinfo@tribute.ca"
+    opt_out_url: "https://www.tribute.ca/privacy_policy/"
+    tier: 2
+    notes: "Toronto, ON; Advertising Services"
+
+  - id: "trm-c-ltd"
+    name: "Trm&c ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "pat@example.com"
+    tier: 2
+    notes: "Cambridge, optional; Advertising Services"
+
+  - id: "trp-research-ltd"
+    name: "TRP Research Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@trpresearch.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'Wellington House,, Taunton, Somerset, TA1 3UF, GB', 'locality': 'Taunton', 'postalCode': 'TA1 3UF', 'region': 'Somerset', 'street': 'Wellington House,'}; Market Research"
+
+  - id: "truthfinder"
+    name: "TruthFinder"
+    region: "GLOBAL"
+    method: "email"
+    contact: "unsubscribe@truthfinder.com"
+    opt_out_url: "https://www.truthfinder.com/privacy-policy/"
+    tier: 2
+    notes: "Consumer Services"
+
+  - id: "umi-commercial-limited"
+    name: "UMi Commercial Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@weareumi.co.uk"
+    tier: 2
+    notes: "Seaham, County Durham; Information Services"
+
+  - id: "unearth-campaigns-llc"
+    name: "Unearth Campaigns LLC"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@unearthcampaigns.com"
+    opt_out_url: "www.unearthcampaigns.com/privacy-policy/"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': '555 Capitol Mall, Sacramento, CA, 95814, US', 'locality': 'Sacramento', 'postalCode': '95814', 'region': 'CA', 'street': '555 Capitol Mall'}; Advertising Services"
+
+  - id: "unidays"
+    name: "Unidays"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpohelp@myunidays.com"
+    tier: 2
+    notes: "Nottingham; Advertising Services"
+
+  - id: "upper-10-limited"
+    name: "Upper 10 Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "johnwright@mmgrowth.com"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '16 High Petergate, York, North Yorkshire, Y01 7EH, GB', 'locality': 'York', 'postalCode': 'Y01 7EH', 'region': 'North Yorkshire', 'street': '16 High Petergate'}; Advertising Services"
+
+  - id: "us-data"
+    name: "US Data"
+    region: "GLOBAL"
+    method: "email"
+    contact: "erich@usdatacorporation.com"
+    tier: 2
+    notes: "Omaha, Nebraska; Advertising Services"
+
+  - id: "usa-trace"
+    name: "Usa Trace"
+    region: "GLOBAL"
+    method: "email"
+    contact: "research@usatrace.com"
+    tier: 2
+    notes: "{'country': 'US', 'fullAddress': 'QuickLocate LLC, Mechanicsville, VA, 23116, US', 'locality': 'Mechanicsville', 'postalCode': '23116', 'region': 'VA', 'street': 'QuickLocate LLC'}; Information Services"
+
+  - id: "valassis"
+    name: "Valassis"
+    region: "GLOBAL"
+    method: "email"
+    contact: "chatbothelp@redplum.com"
+    opt_out_url: "http://valassis.com/about-us/privacy-policy"
+    tier: 2
+    notes: "Livonia, Michigan; Advertising Services"
+
+  - id: "valley-yellow-pages"
+    name: "Valley Yellow Pages"
+    region: "GLOBAL"
+    method: "email"
+    contact: "myyp@myyp.com"
+    opt_out_url: "http://www.myyp.com/privacy"
+    tier: 2
+    notes: "Fresno, CA; Advertising Services"
+
+  - id: "viewdeos"
+    name: "Viewdeos"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@viewdeos.com"
+    opt_out_url: "https://www.viewdeos.com/privacy-policy/"
+    tier: 2
+    notes: "Tel Aviv-Yafo, TEL AVIV; Advertising Services"
+
+  - id: "vml-qais"
+    name: "VML Qais"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@vml.com"
+    opt_out_url: "https://www.vml.com/privacy-policy"
+    tier: 2
+    notes: "Kansas City, MO; Advertising Services"
+
+  - id: "w2-global-data-solutions-limited"
+    name: "W2 Global Data Solutions Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@w2globaldata.com"
+    tier: 2
+    notes: "Cardiff, Wales; Information Services"
+
+  - id: "waterfront-exeter-limited"
+    name: "Waterfront Exeter Limited"
+    region: "GLOBAL"
+    method: "email"
+    contact: "chris@waterfrontexeter.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': 'undefined, Exeter, undefined, EX2 4AP, GB', 'locality': 'Exeter', 'postalCode': 'EX2 4AP'}; Advertising Services"
+
+  - id: "webgains"
+    name: "Webgains"
+    region: "GLOBAL"
+    method: "email"
+    contact: "sales@webgains.com"
+    opt_out_url: "http://www.webgains.com/public/en/privacy/"
+    tier: 2
+    notes: "Bristol, England; Advertising Services"
+
+  - id: "wieden-kennedy"
+    name: "Wieden + kennedy"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@wk.com"
+    opt_out_url: "https://www.wk.com/legal/"
+    tier: 2
+    notes: "Portland, OR; Advertising Services"
+
+  - id: "wiland"
+    name: "Wiland"
+    region: "GLOBAL"
+    method: "email"
+    contact: "privacy@wiland.com"
+    opt_out_url: "https://wiland.com/privacy-policy/"
+    tier: 2
+    notes: "Niwot, CO; Advertising Services"
+
+  - id: "wild-thang-ltd"
+    name: "Wild Thang Ltd"
+    region: "GLOBAL"
+    method: "email"
+    contact: "accounts@wildthang.co.uk"
+    tier: 2
+    notes: "{'country': 'GB', 'fullAddress': '331-337 Derby Rd, Liverpool, Merseyside, L20 8LQ, GB', 'locality': 'Liverpool', 'postalCode': 'L20 8LQ', 'region': 'Merseyside', 'street': '331-337 Derby Rd'}; Advertising Services"
+
+  - id: "yamaha-motor-europe-n-v-branch-uk"
+    name: "Yamaha Motor Europe N.V., Branch UK"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dpo@yamaha-motor.nl"
+    tier: 2
+
+  - id: "yeahmobi"
+    name: "Yeahmobi"
+    region: "GLOBAL"
+    method: "email"
+    contact: "dataprivacy@yeahmobi.com"
+    opt_out_url: "https://en.yeahmobi.com/privacy-policy/"
+    tier: 2
+    notes: "Xian, Shaanxi; Advertising Services"
+
+  - id: "zoon-ru"
+    name: "Zoon.ru"
+    region: "GLOBAL"
+    method: "email"
+    contact: "corp@zoon.ru"
+    tier: 2
+    notes: "Moscow, Moscow; Advertising Services"
+
+  - id: "zucks-inc"
+    name: "Zucks, inc."
+    region: "GLOBAL"
+    method: "email"
+    contact: "dummy@example.com"
+    tier: 2
+    notes: "渋谷区, 東京都; Advertising Services"

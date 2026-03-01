@@ -1,0 +1,30 @@
+Subject: Data Deletion Request — GDPR Article 17 / CCPA
+
+Dear Data Protection Officer,
+
+Pursuant to GDPR Article 17 and/or the California Consumer
+Privacy Act (CCPA), I hereby request the permanent deletion
+of all personal data you hold about me.
+
+{{if .OptOutURL}}
+I have found that your website displays personal information
+about me at the following URL: {{.OptOutURL}}
+{{end}}
+
+My identifying information:
+  Full name : {{.FullName}}
+  Email     : {{.Email}}
+  {{if .Phone}}Phone     : {{.Phone}}{{end}}
+  {{if .Address}}Address   : {{.Address}}{{end}}
+
+I request that you:
+1. Delete all personal data you hold about me
+2. Confirm the deletion by return email
+3. Cease any future processing of my data
+
+You have 30 days to respond to this request (GDPR Article
+12(3)). Failure to comply may result in a complaint to the
+relevant supervisory authority.
+
+Sincerely,
+{{.FullName}}

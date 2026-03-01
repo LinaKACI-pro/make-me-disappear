@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Removal Bot — Dashboard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #f5f5f5; color: #333; padding: 2rem; }
+  h1 { font-size: 1.4rem; margin-bottom: 0.3rem; }
+  .meta { color: #888; font-size: 0.85rem; margin-bottom: 1.5rem; }
+  .summary { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .summary .chip { padding: 0.4rem 0.8rem; border-radius: 6px; font-size: 0.85rem; font-weight: 600; }
+  .chip.confirmed { background: #d4edda; color: #155724; }
+  .chip.sent { background: #cce5ff; color: #004085; }
+  .chip.pending { background: #e2e3e5; color: #383d41; }
+  .chip.review { background: #fff3cd; color: #856404; }
+  .chip.manual { background: #f8d7da; color: #721c24; }
+  .chip.error { background: #f5c6cb; color: #721c24; }
+  table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+  th { background: #343a40; color: #fff; text-align: left; padding: 0.7rem 1rem; font-size: 0.85rem; }
+  td { padding: 0.6rem 1rem; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #f8f9fa; }
+  .status { font-weight: 600; }
+  .status.confirmed { color: #28a745; }
+  .status.sent { color: #007bff; }
+  .status.pending, .status.no_request { color: #6c757d; }
+  .status.needs_review { color: #ffc107; }
+  .status.manual_required { color: #dc3545; }
+  .status.error { color: #dc3545; }
+</style>
+</head>
+<body>
+  <h1>Data Removal Bot</h1>
+  <div class="meta">Derniere mise a jour : {{.GeneratedAt}}</div>
+
+  <div class="summary">
+    <span class="chip confirmed">{{.Confirmed}} confirmes</span>
+    <span class="chip sent">{{.Sent}} envoyes</span>
+    <span class="chip pending">{{.Pending}} en attente</span>
+    <span class="chip review">{{.NeedsReview}} a revoir</span>
+    <span class="chip manual">{{.Manual}} manuels</span>
+    <span class="chip error">{{.Error}} erreurs</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Broker</th>
+        <th>Region</th>
+        <th>Statut</th>
+        <th>Dernier contact</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{range .Rows}}
+      <tr>
+        <td>{{.Name}}</td>
+        <td>{{.Region}}</td>
+        <td class="status {{.Status}}">{{.Status}}</td>
+        <td>{{.LastContact}}</td>
+      </tr>
+      {{end}}
+      {{if not .Rows}}
+      <tr><td colspan="4" style="text-align:center;color:#888;">Aucune donnee. Lancez 'bot db-seed' puis 'bot campaign-init'.</td></tr>
+      {{end}}
+    </tbody>
+  </table>
+</body>
+</html>
