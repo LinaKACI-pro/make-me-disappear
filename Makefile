@@ -21,7 +21,10 @@ staticcheck:
 test:
 	go test ./...
 
-check: vet lint staticcheck test
+go-imports:
+	goimports -w .
+
+check: vet lint staticcheck test go-imports
 
 clean:
 	rm -f $(BIN_BOT) $(BIN_SCRAPE)

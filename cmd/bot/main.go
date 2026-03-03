@@ -580,7 +580,6 @@ func newPurgeBouncedCmd() *cobra.Command {
 	}
 }
 
-
 func sendEmail(cfg *config.Config, region, optOutURL, contact string) error {
 	subject, body, err := email.Render("templates", region, optOutURL, cfg.Identity)
 	if err != nil {
