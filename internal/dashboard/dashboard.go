@@ -49,7 +49,11 @@ func Generate(d *sql.DB, outPath string) error {
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer func() {
+		if cerr := f.Close(); cerr != nil && err == nil {
+			err = cerr
+		}
+	}()
 
 	return tmpl.Execute(f, data)
 }
@@ -66,7 +70,7 @@ func fetchData(d *sql.DB) (*Data, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	data := &Data{
 		GeneratedAt: time.Now().Format("2006-01-02 15:04"),

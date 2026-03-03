@@ -17,14 +17,14 @@ var schema string
 
 // Broker represents a data broker in the database.
 type Broker struct {
-	ID         string
-	Name       string
-	Region     string
-	Method     string
-	Contact    string
-	OptOutURL  string
-	Notes      string
-	Active     bool
+	ID          string
+	Name        string
+	Region      string
+	Method      string
+	Contact     string
+	OptOutURL   string
+	Notes       string
+	Active      bool
 	LastUpdated time.Time
 }
 
@@ -80,11 +80,11 @@ func Open(path string) (*sql.DB, error) {
 		return nil, err
 	}
 	if _, err := db.Exec("PRAGMA journal_mode=WAL"); err != nil {
-		db.Close()
+		_ = db.Close()
 		return nil, err
 	}
 	if err := Migrate(db); err != nil {
-		db.Close()
+		_ = db.Close()
 		return nil, err
 	}
 	return db, nil
@@ -107,7 +107,13 @@ func SeedBrokers(d *sql.DB, path string) (int, error) {
 		return 0, fmt.Errorf("parse brokers file: %w", err)
 	}
 
-	stmt, err := d.Prepare(`INSERT INTO brokers (id, name, region, method, contact, opt_out_url, notes, active)
+	tx, err := d.Begin()
+	if err != nil {
+		return 0, fmt.Errorf("begin tx: %w", err)
+	}
+	defer func() { _ = tx.Rollback() }()
+
+	stmt, err := tx.Prepare(`INSERT INTO brokers (id, name, region, method, contact, opt_out_url, notes, active)
 		VALUES (?, ?, ?, ?, ?, ?, ?, 1)
 		ON CONFLICT(id) DO UPDATE SET
 			name=excluded.name, region=excluded.region, method=excluded.method,
@@ -116,12 +122,15 @@ func SeedBrokers(d *sql.DB, path string) (int, error) {
 	if err != nil {
 		return 0, err
 	}
-	defer stmt.Close()
+	defer func() { _ = stmt.Close() }()
 
 	for _, b := range f.Brokers {
 		if _, err := stmt.Exec(b.ID, b.Name, b.Region, b.Method, b.Contact, b.OptOutURL, b.Notes); err != nil {
 			return 0, fmt.Errorf("insert broker %s: %w", b.ID, err)
 		}
+	}
+	if err := tx.Commit(); err != nil {
+		return 0, fmt.Errorf("commit: %w", err)
 	}
 	return len(f.Brokers), nil
 }
@@ -153,7 +162,7 @@ func PendingRequests(d *sql.DB) ([]RequestWithBroker, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	var result []RequestWithBroker
 	for rows.Next() {
@@ -202,6 +211,22 @@ func MarkRetry(d *sql.DB, requestID, currentAttempt int) error {
 	return err
 }
 
+// MarkConfirmed updates a request as confirmed with the raw response.
+func MarkConfirmed(d *sql.DB, requestID int, responseRaw string) error {
+	_, err := d.Exec(`UPDATE requests SET status='confirmed',
+		last_action=datetime('now'), response_raw=?, next_retry=NULL
+		WHERE id=?`, responseRaw, requestID)
+	return err
+}
+
+// MarkNoData updates a request as no_data with the raw response.
+func MarkNoData(d *sql.DB, requestID int, responseRaw string) error {
+	_, err := d.Exec(`UPDATE requests SET status='no_data',
+		last_action=datetime('now'), response_raw=?, next_retry=NULL
+		WHERE id=?`, responseRaw, requestID)
+	return err
+}
+
 // MarkNeedsReview updates a request with response data for manual review.
 func MarkNeedsReview(d *sql.DB, requestID int, responseRaw string) error {
 	_, err := d.Exec(`UPDATE requests SET status='needs_review',
@@ -228,7 +253,7 @@ func DueRetries(d *sql.DB) ([]RequestWithBroker, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	var result []RequestWithBroker
 	for rows.Next() {
@@ -248,7 +273,7 @@ func StatusSummary(d *sql.DB) ([]StatusCount, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	var result []StatusCount
 	for rows.Next() {
@@ -280,7 +305,7 @@ func queryRequests(d *sql.DB, status string) ([]RequestWithBroker, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	var result []RequestWithBroker
 	for rows.Next() {
@@ -332,7 +357,7 @@ func AllBrokers(d *sql.DB) ([]Broker, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	var result []Broker
 	for rows.Next() {
@@ -363,22 +388,22 @@ func ShouldStartNewCycle(d *sql.DB) (bool, error) {
 	return time.Since(t) > 90*24*time.Hour, nil
 }
 
-// LatestSentRequest finds the most recent sent request for a broker.
+// LatestSentRequest finds the most recent sent or needs review request for a broker.
 func LatestSentRequest(d *sql.DB, brokerID string) (int, error) {
 	var id int
-	err := d.QueryRow(`SELECT id FROM requests WHERE broker_id = ? AND status = 'sent'
+	err := d.QueryRow(`SELECT id FROM requests WHERE broker_id = ? AND status in ('sent', 'needs_review')
 		ORDER BY sent_at DESC LIMIT 1`, brokerID).Scan(&id)
 	return id, err
 }
 
-// LatestSentRequestByContact finds the most recent sent request for the broker
+// LatestSentRequestByContact finds the most recent sent or needs review request for the broker
 // whose contact email matches (case-insensitive).
 func LatestSentRequestByContact(d *sql.DB, contact string) (int, error) {
 	var id int
 	err := d.QueryRow(`
 		SELECT r.id FROM requests r
 		JOIN brokers b ON b.id = r.broker_id
-		WHERE LOWER(b.contact) = LOWER(?) AND r.status = 'sent'
+		WHERE LOWER(b.contact) = LOWER(?) AND r.status in ('sent', 'needs_review')
 		ORDER BY r.id DESC LIMIT 1`, contact).Scan(&id)
 	return id, err
 }
@@ -392,7 +417,7 @@ func BouncedBrokers(d *sql.DB) ([]Broker, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	var brokers []Broker
 	for rows.Next() {
@@ -410,18 +435,24 @@ func PurgeBrokers(d *sql.DB, ids []string) error {
 	if len(ids) == 0 {
 		return nil
 	}
+	tx, err := d.Begin()
+	if err != nil {
+		return fmt.Errorf("begin tx: %w", err)
+	}
+	defer func() { _ = tx.Rollback() }()
+
 	in := "?" + strings.Repeat(",?", len(ids)-1)
 	args := make([]any, len(ids))
 	for i, id := range ids {
 		args[i] = id
 	}
-	if _, err := d.Exec(`DELETE FROM requests WHERE broker_id IN (`+in+`)`, args...); err != nil {
+	if _, err := tx.Exec(`DELETE FROM requests WHERE broker_id IN (`+in+`)`, args...); err != nil {
 		return fmt.Errorf("delete requests: %w", err)
 	}
-	if _, err := d.Exec(`DELETE FROM brokers WHERE id IN (`+in+`)`, args...); err != nil {
+	if _, err := tx.Exec(`DELETE FROM brokers WHERE id IN (`+in+`)`, args...); err != nil {
 		return fmt.Errorf("delete brokers: %w", err)
 	}
-	return nil
+	return tx.Commit()
 }
 
 // PurgeBrokersFromYAML removes brokers with the given IDs from the YAML file

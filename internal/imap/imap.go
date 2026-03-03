@@ -1,9 +1,12 @@
 package imap
 
 import (
+	"context"
 	"database/sql"
 	"fmt"
+	"io"
 	"log/slog"
+	"mime"
 	"regexp"
 	"strings"
 	"time"
@@ -13,23 +16,24 @@ import (
 
 	"github.com/emersion/go-imap/v2"
 	"github.com/emersion/go-imap/v2/imapclient"
+	"github.com/emersion/go-message"
 )
 
 var reFinalRecipient = regexp.MustCompile(`(?i)Final-Recipient:\s*rfc822;\s*([a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,})`)
 
 var folders = []string{"INBOX", "[Gmail]/Spam"}
 
-func Check(cfg config.IMAP, d *sql.DB) error {
+func Check(ctx context.Context, cfg config.IMAP, d *sql.DB) error {
 	c, err := imapclient.DialTLS(fmt.Sprintf("%s:%d", cfg.Host, cfg.Port), nil)
 	if err != nil {
 		return fmt.Errorf("imap dial: %w", err)
 	}
-	defer c.Close()
+	defer func() { _ = c.Close() }()
 
 	if err := c.Login(cfg.User, cfg.Password).Wait(); err != nil {
 		return fmt.Errorf("imap login: %w", err)
 	}
-	defer func() { c.Logout().Wait() }()
+	defer func() { _ = c.Logout().Wait() }()
 
 	criteria := &imap.SearchCriteria{
 		NotFlag: []imap.Flag{imap.FlagSeen},
@@ -38,9 +42,9 @@ func Check(cfg config.IMAP, d *sql.DB) error {
 		t, err := time.Parse("2006-01-02", cfg.Since)
 		if err != nil {
 			slog.Warn("imap: invalid since date, ignoring", "since", cfg.Since)
+		} else {
+			criteria.Since = t
 		}
-
-		criteria.Since = t
 	}
 
 	brokers, err := db.AllBrokers(d) // todo: trop, reduire !!!!
@@ -60,11 +64,14 @@ func Check(cfg config.IMAP, d *sql.DB) error {
 
 	var total int
 	for _, folder := range folders {
+		if ctx.Err() != nil {
+			break
+		}
 		if _, err := c.Select(folder, nil).Wait(); err != nil {
 			slog.Warn("imap: skipping folder", "folder", folder)
 			continue
 		}
-		total += processFolder(c, d, criteria, domainMap, brokerNames)
+		total += processFolder(ctx, c, d, criteria, domainMap, brokerNames)
 	}
 	slog.Info("imap: done", "processed", total)
 	return nil
@@ -84,7 +91,7 @@ func matchByName(brokerNames []brokerName, senderName string) (string, bool) {
 	return "", false
 }
 
-func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteria, domainMap map[string]string, brokerNames []brokerName) int {
+func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteria, domainMap map[string]string, brokerNames []brokerName) int {
 	searchData, err := c.UIDSearch(criteria, nil).Wait()
 	if err != nil {
 		slog.Error("imap: search failed", "err", err)
@@ -140,12 +147,15 @@ func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteri
 		}
 		msgs = append(msgs, entry)
 	}
-	fetchCmd.Close()
+	_ = fetchCmd.Close()
 
 	var processed int
 	var toMarkSeen []imap.UID
 
 	for _, m := range msgs {
+		if ctx.Err() != nil {
+			break
+		}
 		if strings.Contains(m.senderLocal, "mailer-daemon") {
 			processed += handleBounce(d, m.body, m.uid, &toMarkSeen)
 			continue
@@ -175,12 +185,29 @@ func processFolder(c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteri
 			slog.Warn("imap: no sent request", "broker", brokerID)
 			continue
 		}
-		preview := "Subject: " + m.subject + "\n\n" + extractBody(m.body)
-		if err := db.MarkNeedsReview(d, reqID, preview); err != nil {
-			slog.Error("imap: mark needs_review failed", "err", err)
-			continue
+		decoded := decodeMIMEText(m.body)
+		preview := "Subject: " + m.subject + "\n\n" + decoded
+		cl := classifyReply(decoded)
+		switch cl.kind {
+		case replyNoData:
+			if err := db.MarkNoData(d, reqID, preview); err != nil {
+				slog.Error("imap: mark no_data failed", "err", err)
+				continue
+			}
+			slog.Info("imap: auto no_data", "from", m.senderDomain, "request", reqID, "score", cl.score)
+		case replyConfirmed:
+			if err := db.MarkConfirmed(d, reqID, preview); err != nil {
+				slog.Error("imap: mark confirmed failed", "err", err)
+				continue
+			}
+			slog.Info("imap: auto-confirmed (deletion)", "from", m.senderDomain, "request", reqID, "score", cl.score)
+		default:
+			if err := db.MarkNeedsReview(d, reqID, preview); err != nil {
+				slog.Error("imap: mark needs_review failed", "err", err)
+				continue
+			}
+			slog.Info("imap: reply needs review", "from", m.senderDomain, "request", reqID)
 		}
-		slog.Info("imap: reply", "from", m.senderDomain, "request", reqID)
 		processed++
 		toMarkSeen = append(toMarkSeen, m.uid)
 	}
@@ -232,7 +259,7 @@ func handleBounce(d *sql.DB, body string, uid imap.UID, toMarkSeen *[]imap.UID) 
 	return 1
 }
 
-func extractBody(raw string) string {
+func ExtractBody(raw string) string {
 	// Headers and body are separated by a blank line.
 	for _, sep := range []string{"\r\n\r\n", "\n\n"} {
 		if i := strings.Index(raw, sep); i != -1 {
@@ -255,4 +282,44 @@ func extractDomain(contact string) string {
 		return ""
 	}
 	return strings.ToLower(parts[1])
+}
+
+// decodeMIMEText parses a raw MIME message and returns the decoded plain text.
+// This handles base64/quoted-printable encoded parts that would otherwise
+// be invisible to regex matching.
+func decodeMIMEText(raw string) string {
+	e, err := message.Read(strings.NewReader(raw))
+	if e == nil {
+		// Parsing failed entirely, fall back to stripping headers manually.
+		return ExtractBody(raw)
+	}
+	if err != nil {
+		// Partial error (e.g. unknown charset) — entity is still usable.
+		slog.Debug("imap: mime parse warning", "err", err)
+	}
+	var sb strings.Builder
+	collectMIMEText(e, &sb)
+	if sb.Len() == 0 {
+		return ExtractBody(raw)
+	}
+	return sb.String()
+}
+
+func collectMIMEText(e *message.Entity, sb *strings.Builder) {
+	if mr := e.MultipartReader(); mr != nil {
+		for {
+			part, err := mr.NextPart()
+			if err != nil {
+				break
+			}
+			collectMIMEText(part, sb)
+		}
+		return
+	}
+	ct, _, _ := mime.ParseMediaType(e.Header.Get("Content-Type"))
+	if ct == "" || strings.HasPrefix(strings.ToLower(ct), "text/") {
+		b, _ := io.ReadAll(e.Body)
+		sb.Write(b)
+		sb.WriteByte('\n')
+	}
 }

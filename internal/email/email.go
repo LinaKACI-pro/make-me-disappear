@@ -82,7 +82,7 @@ func Send(cfg config.SMTP, from, to, subject, body string) error {
 	if err != nil {
 		return fmt.Errorf("smtp client: %w", err)
 	}
-	defer c.Close()
+	defer func() { _ = c.Close() }()
 
 	if err := c.StartTLS(&tls.Config{ServerName: cfg.Host}); err != nil {
 		return fmt.Errorf("smtp starttls: %w", err)

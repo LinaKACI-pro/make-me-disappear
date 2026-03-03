@@ -136,7 +136,7 @@ func fetchDomains() ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	r := csv.NewReader(resp.Body)
 	// Skip header.
@@ -213,7 +213,7 @@ func queryOne(domain string) *broker {
 	if err != nil {
 		return nil
 	}
-	defer resp.Body.Close()
+	defer func() { _ = resp.Body.Close() }()
 
 	if resp.StatusCode >= 400 {
 		return nil
@@ -293,12 +293,16 @@ func sortBrokers(brokers []broker) {
 	})
 }
 
-func writeYAML(brokers []broker) error {
+func writeYAML(brokers []broker) (err error) {
 	f, err := os.Create(outPath)
 	if err != nil {
 		return err
 	}
-	defer f.Close()
+	defer func() {
+		if cerr := f.Close(); cerr != nil && err == nil {
+			err = cerr
+		}
+	}()
 
 	eu := 0
 	withEmail := 0
@@ -311,12 +315,12 @@ func writeYAML(brokers []broker) error {
 		}
 	}
 
-	fmt.Fprintf(f, "# Auto-generated from YourDigitalRights.org API\n")
-	fmt.Fprintf(f, "# Total: %d brokers (EU: %d)\n", len(brokers), eu)
-	fmt.Fprintf(f, "# With email: %d | Without: %d\n", withEmail, len(brokers)-withEmail)
-	fmt.Fprintf(f, "#\n")
-	fmt.Fprintf(f, "# Review, then: cp brokers_scraped.yaml brokers.yaml && ./bot db-seed\n\n")
-	fmt.Fprintf(f, "brokers:\n")
+	_, _ = fmt.Fprintf(f, "# Auto-generated from YourDigitalRights.org API\n")
+	_, _ = fmt.Fprintf(f, "# Total: %d brokers (EU: %d)\n", len(brokers), eu)
+	_, _ = fmt.Fprintf(f, "# With email: %d | Without: %d\n", withEmail, len(brokers)-withEmail)
+	_, _ = fmt.Fprintf(f, "#\n")
+	_, _ = fmt.Fprintf(f, "# Review, then: cp brokers_scraped.yaml brokers.yaml && ./bot db-seed\n\n")
+	_, _ = fmt.Fprintf(f, "brokers:\n")
 
 	seen := make(map[string]bool)
 	for _, b := range brokers {
@@ -331,17 +335,17 @@ func writeYAML(brokers []broker) error {
 			method = "manual"
 		}
 
-		fmt.Fprintf(f, "  - id: %q\n", slug)
-		fmt.Fprintf(f, "    name: %q\n", b.Name)
-		fmt.Fprintf(f, "    region: %q\n", b.Region)
-		fmt.Fprintf(f, "    method: %q\n", method)
+		_, _ = fmt.Fprintf(f, "  - id: %q\n", slug)
+		_, _ = fmt.Fprintf(f, "    name: %q\n", b.Name)
+		_, _ = fmt.Fprintf(f, "    region: %q\n", b.Region)
+		_, _ = fmt.Fprintf(f, "    method: %q\n", method)
 		if b.Email != "" {
-			fmt.Fprintf(f, "    contact: %q\n", b.Email)
+			_, _ = fmt.Fprintf(f, "    contact: %q\n", b.Email)
 		}
 		if b.PrivacyURL != "" {
-			fmt.Fprintf(f, "    opt_out_url: %q\n", b.PrivacyURL)
+			_, _ = fmt.Fprintf(f, "    opt_out_url: %q\n", b.PrivacyURL)
 		}
-		fmt.Fprintf(f, "    tier: 2\n")
+		_, _ = fmt.Fprintf(f, "    tier: 2\n")
 
 		var notes []string
 		if b.HQ != "" {
@@ -354,9 +358,9 @@ func writeYAML(brokers []broker) error {
 			notes = append(notes, "no email found")
 		}
 		if len(notes) > 0 {
-			fmt.Fprintf(f, "    notes: %q\n", strings.Join(notes, "; "))
+			_, _ = fmt.Fprintf(f, "    notes: %q\n", strings.Join(notes, "; "))
 		}
-		fmt.Fprintln(f)
+		_, _ = fmt.Fprintln(f)
 	}
 
 	return nil

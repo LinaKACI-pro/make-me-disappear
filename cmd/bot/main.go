@@ -61,7 +61,7 @@ func newDBSeedCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			n, err := db.SeedBrokers(d, "brokers.yaml")
 			if err != nil {
@@ -83,7 +83,7 @@ func newCampaignInitCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			n, err := db.CreatePendingRequests(d)
 			if err != nil {
@@ -108,7 +108,7 @@ func newRunCmd() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("database: %w", err)
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 			defer stop()
@@ -121,9 +121,9 @@ func newRunCmd() *cobra.Command {
 func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 	slog.Info("scheduler started")
 
-	cycleTicker  := time.NewTicker(24 * time.Hour)
+	cycleTicker := time.NewTicker(24 * time.Hour)
 	processTicker := time.NewTicker(10 * time.Minute)
-	imapTicker   := time.NewTicker(30 * time.Minute)
+	imapTicker := time.NewTicker(30 * time.Minute)
 	notifyTicker := time.NewTicker(24 * time.Hour)
 	defer cycleTicker.Stop()
 	defer processTicker.Stop()
@@ -153,7 +153,7 @@ func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 		}()
 		imapMu.Lock()
 		defer imapMu.Unlock()
-		checkIMAP(cfg, d)
+		checkIMAP(ctx, cfg, d)
 	})
 	sendNotification(cfg, d)
 
@@ -191,7 +191,7 @@ func runScheduler(ctx context.Context, cfg *config.Config, d *sql.DB) error {
 					return
 				}
 				defer imapMu.Unlock()
-				checkIMAP(cfg, d)
+				checkIMAP(ctx, cfg, d)
 			})
 		case <-notifyTicker.C:
 			sendNotification(cfg, d)
@@ -224,29 +224,34 @@ func processRequests(ctx context.Context, cfg *config.Config, d *sql.DB) {
 	}
 
 	for _, r := range reqs {
-		switch r.BrokerMethod {
-		case "email":
-			if r.Contact == "" {
-				slog.Error("no contact email", "broker", r.BrokerID)
-				db.MarkError(d, r.ID, "no contact email")
-				continue
-			}
-			err = sendEmail(cfg, r.BrokerRegion, r.OptOutURL, r.Contact)
-			if err != nil {
-				slog.Error("send failed", "broker", r.BrokerName, "err", err)
-				db.MarkError(d, r.ID, err.Error())
-			}
-
-			slog.Info("sent", "broker", r.BrokerName, "contact", r.Contact)
-			db.MarkSent(d, r.ID)
-		case "form":
-			slog.Warn("form not implemented, skipping", "broker", r.BrokerName)
-		case "manual":
-			slog.Info("manual action required", "broker", r.BrokerName)
-			db.MarkManualRequired(d, r.ID)
-		default:
+		if r.BrokerMethod != "email" {
 			slog.Error("unknown method", "method", r.BrokerMethod, "broker", r.BrokerName)
-			db.MarkError(d, r.ID, "unknown method: "+r.BrokerMethod)
+			if err := db.MarkError(d, r.ID, "unknown method: "+r.BrokerMethod); err != nil {
+				slog.Error("db mark error failed", "err", err)
+			}
+			continue
+		}
+
+		if r.Contact == "" {
+			slog.Error("no contact email", "broker", r.BrokerID)
+			if err := db.MarkError(d, r.ID, "no contact email"); err != nil {
+				slog.Error("db mark error failed", "err", err)
+			}
+			continue
+		}
+
+		err = sendEmail(cfg, r.BrokerRegion, r.OptOutURL, r.Contact)
+		if err != nil {
+			slog.Error("send failed", "broker", r.BrokerName, "err", err)
+			if err = db.MarkError(d, r.ID, err.Error()); err != nil {
+				slog.Error("db mark error failed", "err", err)
+			}
+			continue
+		}
+
+		slog.Info("sent", "broker", r.BrokerName, "contact", r.Contact)
+		if err := db.MarkSent(d, r.ID); err != nil {
+			slog.Error("db mark sent failed", "err", err)
 		}
 
 		// Random delay between sends (2-10s), interruptible on shutdown.
@@ -266,16 +271,18 @@ func processRequests(ctx context.Context, cfg *config.Config, d *sql.DB) {
 	}
 	for _, r := range retries {
 		slog.Info("retrying", "broker", r.BrokerName, "attempt", r.Attempt+1)
-		db.MarkRetry(d, r.ID, r.Attempt)
+		if err := db.MarkRetry(d, r.ID, r.Attempt); err != nil {
+			slog.Error("db mark retry failed", "err", err)
+		}
 	}
 }
 
-func checkIMAP(cfg *config.Config, d *sql.DB) {
+func checkIMAP(ctx context.Context, cfg *config.Config, d *sql.DB) {
 	if cfg.IMAP.Host == "" {
 		return
 	}
 	slog.Info("checking inbox")
-	if err := imapcheck.Check(cfg.IMAP, d); err != nil {
+	if err := imapcheck.Check(ctx, cfg.IMAP, d); err != nil {
 		slog.Error("imap check failed", "err", err)
 	}
 }
@@ -298,7 +305,7 @@ func newStatusCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			counts, err := db.StatusSummary(d)
 			if err != nil {
@@ -341,7 +348,7 @@ func newSendCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			broker, err := db.BrokerByID(d, brokerID)
 			if err != nil {
@@ -360,11 +367,15 @@ func newSendCmd() *cobra.Command {
 			}
 
 			if err := sendEmail(cfg, broker.Region, broker.OptOutURL, broker.Contact); err != nil {
-				db.MarkError(d, reqID, err.Error())
+				if dbErr := db.MarkError(d, reqID, err.Error()); dbErr != nil {
+					slog.Error("db mark error failed", "err", dbErr)
+				}
 				return fmt.Errorf("send failed: %w", err)
 			}
 
-			db.MarkSent(d, reqID)
+			if err := db.MarkSent(d, reqID); err != nil {
+				return fmt.Errorf("db mark sent: %w", err)
+			}
 			fmt.Printf("Sent deletion request to %s (%s)\n", broker.Name, broker.Contact)
 			return nil
 		},
@@ -383,7 +394,7 @@ func newManualListCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			reqs, err := db.ManualRequests(d)
 			if err != nil {
@@ -414,7 +425,7 @@ func newInboxReviewCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			reqs, err := db.NeedsReviewRequests(d)
 			if err != nil {
@@ -429,7 +440,7 @@ func newInboxReviewCmd() *cobra.Command {
 			for _, r := range reqs {
 				fmt.Printf("\n══════ Request #%d — %s (%s) ══════\n", r.ID, r.BrokerName, r.BrokerRegion)
 				if r.ResponseRaw != "" {
-					preview := stripEmailHeaders(r.ResponseRaw)
+					preview := imapcheck.ExtractBody(r.ResponseRaw)
 					if len(preview) > 500 {
 						preview = preview[:500] + "\n[... truncated]"
 					}
@@ -478,14 +489,16 @@ func newDashboardCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			outPath := "/tmp/bot-dashboard.html"
 			if err := dashboard.Generate(d, outPath); err != nil {
 				return err
 			}
 			fmt.Printf("Dashboard written to %s\n", outPath)
-			exec.Command("xdg-open", outPath).Start()
+			if err := exec.Command("xdg-open", outPath).Start(); err != nil {
+				slog.Warn("could not open browser", "err", err)
+			}
 			return nil
 		},
 	}
@@ -504,8 +517,10 @@ func newIMAPCheckCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
-			checkIMAP(cfg, d)
+			defer func() { _ = d.Close() }()
+			ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
+			defer stop()
+			checkIMAP(ctx, cfg, d)
 			return nil
 		},
 	}
@@ -520,7 +535,7 @@ func newPurgeBouncedCmd() *cobra.Command {
 			if err != nil {
 				return err
 			}
-			defer d.Close()
+			defer func() { _ = d.Close() }()
 
 			brokers, err := db.BouncedBrokers(d)
 			if err != nil {
@@ -538,7 +553,9 @@ func newPurgeBouncedCmd() *cobra.Command {
 
 			fmt.Print("\nPurge these from DB and brokers.yaml? [y/N]: ")
 			var answer string
-			fmt.Scan(&answer)
+			if _, err := fmt.Scan(&answer); err != nil {
+				return err
+			}
 			if strings.ToLower(answer) != "y" {
 				fmt.Println("Aborted.")
 				return nil
@@ -563,16 +580,6 @@ func newPurgeBouncedCmd() *cobra.Command {
 	}
 }
 
-// stripEmailHeaders removes raw email headers, returning only the body.
-// If the input has no header block (e.g. already cleaned), it is returned as-is.
-func stripEmailHeaders(raw string) string {
-	for _, sep := range []string{"\r\n\r\n", "\n\n"} {
-		if i := strings.Index(raw, sep); i != -1 {
-			return strings.TrimSpace(raw[i+len(sep):])
-		}
-	}
-	return raw
-}
 
 func sendEmail(cfg *config.Config, region, optOutURL, contact string) error {
 	subject, body, err := email.Render("templates", region, optOutURL, cfg.Identity)

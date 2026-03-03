@@ -55,6 +55,14 @@ brokers:
     opt_out_url: ""
     tier: 2
     notes: "{'country': 'DE', 'fullAddress': 'Schönhauser Allee 36, Berlin, Berlin, 10435, DE', 'locality': 'Berlin', 'postalCode': '10435', 'region': 'Berlin', 'street': 'Schönhauser Allee 36'}; Advertising Services"
+  - id: "rebrandly"
+    name: "Rebrandly"
+    region: "EU"
+    method: "email"
+    contact: "support@rebrandly.com"
+    opt_out_url: "https://rebrandly.com/privacy-policy"
+    tier: 2
+    notes: "Dublin, Ireland; Advertising Services"
   - id: bmi-globaled-ltd
     name: Bmi Globaled Ltd
     region: EU

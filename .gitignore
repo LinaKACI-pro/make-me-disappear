@@ -1,0 +1,7 @@
+.claude/
+.vscode/
+bot
+bot.db
+hooks/
+config.yaml
+scrape
