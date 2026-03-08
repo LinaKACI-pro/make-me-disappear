@@ -47,19 +47,9 @@ func Check(ctx context.Context, cfg config.IMAP, d *sql.DB) error {
 		}
 	}
 
-	brokers, err := db.AllBrokers(d) // todo: trop, reduire !!!!
+	brokerNames, err := db.ListBrokersNameDomain(d)
 	if err != nil {
-		return fmt.Errorf("load brokers: %w", err)
-	}
-	domainMap := make(map[string]string)
-	var brokerNames []brokerName
-	for _, b := range brokers {
-		if domain := extractDomain(b.Contact); domain != "" {
-			domainMap[domain] = b.ID
-		}
-		if b.Name != "" {
-			brokerNames = append(brokerNames, brokerName{b.ID, strings.ToLower(b.Name)})
-		}
+		return fmt.Errorf("db.ListBrokersNameDomain: %w", err)
 	}
 
 	var total int
@@ -71,27 +61,41 @@ func Check(ctx context.Context, cfg config.IMAP, d *sql.DB) error {
 			slog.Warn("imap: skipping folder", "folder", folder)
 			continue
 		}
-		total += processFolder(ctx, c, d, criteria, domainMap, brokerNames)
+		total += processFolder(ctx, c, d, criteria, brokerNames)
 	}
 	slog.Info("imap: done", "processed", total)
 	return nil
 }
 
-type brokerName struct{ id, name string }
-
-func matchByName(brokerNames []brokerName, senderName string) (string, bool) {
+func matchByName(brokerNames []db.BrokerNameDomain, senderName string) (string, bool) {
 	if senderName == "" {
 		return "", false
 	}
 	for _, b := range brokerNames {
-		if strings.Contains(b.name, senderName) || strings.Contains(senderName, b.name) {
-			return b.id, true
+		if strings.Contains(b.Name, senderName) || strings.Contains(senderName, b.Name) {
+			return b.ID, true
 		}
 	}
 	return "", false
 }
 
-func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteria, domainMap map[string]string, brokerNames []brokerName) int {
+func matchByDomain(brokerNames []db.BrokerNameDomain, senderDomain string) (string, bool) {
+	for _, b := range brokerNames {
+		if b.Domain == senderDomain {
+			return b.ID, true
+		}
+	}
+	return "", false
+}
+
+type imapUpdate struct {
+	uid    imap.UID
+	reqID  int
+	status string
+	raw    string
+}
+
+func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteria, brokerNames []db.BrokerNameDomain) int {
 	searchData, err := c.UIDSearch(criteria, nil).Wait()
 	if err != nil {
 		slog.Error("imap: search failed", "err", err)
@@ -149,70 +153,115 @@ func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteri
 	}
 	_ = fetchCmd.Close()
 
-	var processed int
-	var toMarkSeen []imap.UID
+	// Phase 2: classify messages and collect DB updates (no DB writes yet).
+	var updates []imapUpdate
+	var bounceUpdates []imapUpdate
 
 	for _, m := range msgs {
 		if ctx.Err() != nil {
 			break
 		}
 		if strings.Contains(m.senderLocal, "mailer-daemon") {
-			processed += handleBounce(d, m.body, m.uid, &toMarkSeen)
+			if bu, ok := classifyBounce(d, m.body, m.uid); ok {
+				bounceUpdates = append(bounceUpdates, bu)
+			}
 			continue
 		}
 		if strings.Contains(m.senderLocal, "postmaster") {
 			if isBounce(m.body) {
-				processed += handleBounce(d, m.body, m.uid, &toMarkSeen)
+				if bu, ok := classifyBounce(d, m.body, m.uid); ok {
+					bounceUpdates = append(bounceUpdates, bu)
+				}
 				continue
 			}
-			// Not a bounce: postmaster is acting as a human reply, fall through to broker matching.
 			slog.Info("imap: postmaster reply, treating as broker response", "from", m.senderDomain)
 		}
 
-		brokerID, ok := domainMap[m.senderDomain]
-		if !ok {
-			brokerID, ok = matchByName(brokerNames, m.senderName)
-		}
+		brokerID, ok := matchByDomain(brokerNames, m.senderDomain)
 		if !ok {
 			brokerID, ok = matchByName(brokerNames, m.senderDomain)
+		}
+		if !ok {
+			brokerID, ok = matchByName(brokerNames, m.senderName)
 		}
 		if !ok {
 			slog.Warn("imap: unmatched", "from", m.senderDomain, "name", m.senderName, "subject", m.subject)
 			continue
 		}
-		reqID, err := db.LatestSentRequest(d, brokerID)
-		if err != nil {
+
+		reqID, err := db.RequestForBroker(d, brokerID)
+		if err == sql.ErrNoRows {
 			slog.Warn("imap: no sent request", "broker", brokerID)
 			continue
 		}
+		if err != nil {
+			slog.Error("imap: db error looking up request", "broker", brokerID, "err", err)
+			continue
+		}
+
 		decoded := decodeMIMEText(m.body)
 		preview := "Subject: " + m.subject + "\n\n" + decoded
 		cl := classifyReply(decoded)
+		status := "needs_review"
 		switch cl.kind {
 		case replyNoData:
-			if err := db.MarkNoData(d, reqID, preview); err != nil {
-				slog.Error("imap: mark no_data failed", "err", err)
-				continue
-			}
+			status = "no_data"
 			slog.Info("imap: auto no_data", "from", m.senderDomain, "request", reqID, "score", cl.score)
 		case replyConfirmed:
-			if err := db.MarkConfirmed(d, reqID, preview); err != nil {
-				slog.Error("imap: mark confirmed failed", "err", err)
-				continue
-			}
+			status = "confirmed"
 			slog.Info("imap: auto-confirmed (deletion)", "from", m.senderDomain, "request", reqID, "score", cl.score)
 		default:
-			if err := db.MarkNeedsReview(d, reqID, preview); err != nil {
-				slog.Error("imap: mark needs_review failed", "err", err)
-				continue
-			}
 			slog.Info("imap: reply needs review", "from", m.senderDomain, "request", reqID)
 		}
-		processed++
-		toMarkSeen = append(toMarkSeen, m.uid)
+		updates = append(updates, imapUpdate{uid: m.uid, reqID: reqID, status: status, raw: preview})
 	}
 
-	// Mark all handled messages as seen in one batch.
+	if len(updates) == 0 && len(bounceUpdates) == 0 {
+		return 0
+	}
+
+	// Phase 3: apply all DB writes in a single transaction.
+	tx, err := d.Begin()
+	if err != nil {
+		slog.Error("imap: begin tx failed", "err", err)
+		return 0
+	}
+	defer func() { _ = tx.Rollback() }()
+
+	for _, u := range bounceUpdates {
+		if err := db.MarkError(tx, u.reqID, u.raw); err != nil {
+			slog.Error("imap: mark error failed", "err", err)
+			return 0
+		}
+	}
+	for _, u := range updates {
+		switch u.status {
+		case "no_data":
+			err = db.MarkNoData(tx, u.reqID, u.raw)
+		case "confirmed":
+			err = db.MarkConfirmed(tx, u.reqID, u.raw)
+		default:
+			err = db.MarkNeedsReview(tx, u.reqID, u.raw)
+		}
+		if err != nil {
+			slog.Error("imap: mark failed", "status", u.status, "request", u.reqID, "err", err)
+			return 0
+		}
+	}
+
+	if err := tx.Commit(); err != nil {
+		slog.Error("imap: commit failed", "err", err)
+		return 0
+	}
+
+	// Phase 4: mark all handled messages as seen in one IMAP batch.
+	var toMarkSeen []imap.UID
+	for _, u := range bounceUpdates {
+		toMarkSeen = append(toMarkSeen, u.uid)
+	}
+	for _, u := range updates {
+		toMarkSeen = append(toMarkSeen, u.uid)
+	}
 	if len(toMarkSeen) > 0 {
 		uidSet := imap.UIDSet{}
 		for _, uid := range toMarkSeen {
@@ -222,12 +271,12 @@ func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteri
 			Op:    imap.StoreFlagsAdd,
 			Flags: []imap.Flag{imap.FlagSeen},
 		}, nil)
-		if _, err := storeCmd.Collect(); err != nil { // a check
+		if _, err := storeCmd.Collect(); err != nil {
 			slog.Error("imap: mark seen failed", "err", err)
 		}
 	}
 
-	return processed
+	return len(updates) + len(bounceUpdates)
 }
 
 // isBounce returns true if the raw email body contains DSN delivery-failure markers.
@@ -237,26 +286,25 @@ func isBounce(body string) bool {
 		strings.Contains(body, "Status: 5.")
 }
 
-// handleBounce processes a bounce email, marks the matching request as error,
-// and appends the UID to toMarkSeen. Returns 1 if successfully processed.
-func handleBounce(d *sql.DB, body string, uid imap.UID, toMarkSeen *[]imap.UID) int {
-	*toMarkSeen = append(*toMarkSeen, uid)
+// classifyBounce extracts the bounce address, looks up the request, and returns
+// an update to apply later. The DB write is deferred to the transaction phase.
+func classifyBounce(d *sql.DB, body string, uid imap.UID) (imapUpdate, bool) {
 	addr := extractBounceAddr(body)
 	if addr == "" {
 		slog.Warn("imap: bounce address not found")
-		return 0
+		return imapUpdate{}, false
 	}
-	reqID, err := db.LatestSentRequestByContact(d, addr)
-	if err != nil {
+	reqID, err := db.RequestByContact(d, addr)
+	if err == sql.ErrNoRows {
 		slog.Warn("imap: bounce not in DB", "contact", addr)
-		return 0
+		return imapUpdate{}, false
 	}
-	if err := db.MarkError(d, reqID, "bounce: address not found"); err != nil {
-		slog.Error("imap: mark error failed", "err", err)
-		return 0
+	if err != nil {
+		slog.Error("imap: db error looking up bounce", "contact", addr, "err", err)
+		return imapUpdate{}, false
 	}
 	slog.Info("imap: bounce", "contact", addr, "request", reqID)
-	return 1
+	return imapUpdate{uid: uid, reqID: reqID, raw: "bounce: address not found"}, true
 }
 
 func ExtractBody(raw string) string {
@@ -274,14 +322,6 @@ func extractBounceAddr(body string) string {
 		return strings.ToLower(strings.TrimSpace(m[1]))
 	}
 	return ""
-}
-
-func extractDomain(contact string) string {
-	parts := strings.SplitN(contact, "@", 2)
-	if len(parts) != 2 {
-		return ""
-	}
-	return strings.ToLower(parts[1])
 }
 
 // decodeMIMEText parses a raw MIME message and returns the decoded plain text.

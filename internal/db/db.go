@@ -15,6 +15,12 @@ import (
 //go:embed schema.sql
 var schema string
 
+// Querier is satisfied by both *sql.DB and *sql.Tx.
+type Querier interface {
+	Exec(query string, args ...any) (sql.Result, error)
+	QueryRow(query string, args ...any) *sql.Row
+}
+
 // Broker represents a data broker in the database.
 type Broker struct {
 	ID          string
@@ -57,6 +63,8 @@ type RequestWithBroker struct {
 	Contact      string
 	OptOutURL    string
 }
+
+type BrokerNameDomain struct{ ID, Name, Domain string }
 
 type brokerYAML struct {
 	ID        string `yaml:"id"`
@@ -135,16 +143,16 @@ func SeedBrokers(d *sql.DB, path string) (int, error) {
 	return len(f.Brokers), nil
 }
 
-// CreatePendingRequests creates a pending request for each active broker that
-// doesn't already have one with status pending or sent.
+// CreatePendingRequests creates or resets requests for active brokers.
+// Brokers without a request get a new one. Brokers with a terminal status
+// (confirmed, no_data, error) get reset to pending.
 func CreatePendingRequests(d *sql.DB) (int, error) {
 	res, err := d.Exec(`INSERT INTO requests (broker_id, status)
-		SELECT b.id, 'pending' FROM brokers b
-		WHERE b.active = 1
-		AND NOT EXISTS (
-			SELECT 1 FROM requests r
-			WHERE r.broker_id = b.id AND r.status IN ('pending', 'sent')
-		)`)
+		SELECT b.id, 'pending' FROM brokers b WHERE b.active = 1
+		ON CONFLICT(broker_id) DO UPDATE SET
+			status='pending', attempt=1, sent_at=NULL, last_action=NULL,
+			next_retry=NULL, response_raw=NULL, notes=NULL, method_used=NULL
+		WHERE requests.status NOT IN ('pending', 'sent')`)
 	if err != nil {
 		return 0, err
 	}
@@ -177,7 +185,7 @@ func PendingRequests(d *sql.DB) ([]RequestWithBroker, error) {
 }
 
 // MarkSent updates a request as sent with a retry scheduled in 35 days.
-func MarkSent(d *sql.DB, requestID int) error {
+func MarkSent(d Querier, requestID int) error {
 	_, err := d.Exec(`UPDATE requests SET status='sent', method_used='email',
 		sent_at=datetime('now'), last_action=datetime('now'),
 		next_retry=datetime('now', '+35 days')
@@ -186,14 +194,14 @@ func MarkSent(d *sql.DB, requestID int) error {
 }
 
 // MarkError updates a request as error with notes.
-func MarkError(d *sql.DB, requestID int, notes string) error {
+func MarkError(d Querier, requestID int, notes string) error {
 	_, err := d.Exec(`UPDATE requests SET status='error', last_action=datetime('now'), notes=?
 		WHERE id=?`, notes, requestID)
 	return err
 }
 
 // MarkManualRequired updates a request as manual_required.
-func MarkManualRequired(d *sql.DB, requestID int) error {
+func MarkManualRequired(d Querier, requestID int) error {
 	_, err := d.Exec(`UPDATE requests SET status='manual_required', last_action=datetime('now')
 		WHERE id=?`, requestID)
 	return err
@@ -201,7 +209,7 @@ func MarkManualRequired(d *sql.DB, requestID int) error {
 
 // MarkRetry increments the attempt counter and reschedules. If attempt > 3,
 // marks as manual_required instead.
-func MarkRetry(d *sql.DB, requestID, currentAttempt int) error {
+func MarkRetry(d Querier, requestID, currentAttempt int) error {
 	if currentAttempt >= 3 {
 		return MarkManualRequired(d, requestID)
 	}
@@ -212,7 +220,7 @@ func MarkRetry(d *sql.DB, requestID, currentAttempt int) error {
 }
 
 // MarkConfirmed updates a request as confirmed with the raw response.
-func MarkConfirmed(d *sql.DB, requestID int, responseRaw string) error {
+func MarkConfirmed(d Querier, requestID int, responseRaw string) error {
 	_, err := d.Exec(`UPDATE requests SET status='confirmed',
 		last_action=datetime('now'), response_raw=?, next_retry=NULL
 		WHERE id=?`, responseRaw, requestID)
@@ -220,7 +228,7 @@ func MarkConfirmed(d *sql.DB, requestID int, responseRaw string) error {
 }
 
 // MarkNoData updates a request as no_data with the raw response.
-func MarkNoData(d *sql.DB, requestID int, responseRaw string) error {
+func MarkNoData(d Querier, requestID int, responseRaw string) error {
 	_, err := d.Exec(`UPDATE requests SET status='no_data',
 		last_action=datetime('now'), response_raw=?, next_retry=NULL
 		WHERE id=?`, responseRaw, requestID)
@@ -228,7 +236,7 @@ func MarkNoData(d *sql.DB, requestID int, responseRaw string) error {
 }
 
 // MarkNeedsReview updates a request with response data for manual review.
-func MarkNeedsReview(d *sql.DB, requestID int, responseRaw string) error {
+func MarkNeedsReview(d Querier, requestID int, responseRaw string) error {
 	_, err := d.Exec(`UPDATE requests SET status='needs_review',
 		last_action=datetime('now'), response_raw=?, next_retry=NULL
 		WHERE id=?`, responseRaw, requestID)
@@ -236,7 +244,7 @@ func MarkNeedsReview(d *sql.DB, requestID int, responseRaw string) error {
 }
 
 // UpdateStatus sets the status of a request (used by inbox review).
-func UpdateStatus(d *sql.DB, requestID int, status string) error {
+func UpdateStatus(d Querier, requestID int, status string) error {
 	_, err := d.Exec(`UPDATE requests SET status=?, last_action=datetime('now')
 		WHERE id=?`, status, requestID)
 	return err
@@ -332,11 +340,10 @@ func BrokerByID(d *sql.DB, id string) (*Broker, error) {
 	return &b, nil
 }
 
-// FindOrCreateRequest finds an existing pending/sent request for a broker, or creates one.
+// FindOrCreateRequest finds the request for a broker, or creates one.
 func FindOrCreateRequest(d *sql.DB, brokerID string) (int, error) {
 	var id int
-	err := d.QueryRow(`SELECT id FROM requests WHERE broker_id = ? AND status IN ('pending', 'sent')
-		ORDER BY id DESC LIMIT 1`, brokerID).Scan(&id)
+	err := d.QueryRow(`SELECT id FROM requests WHERE broker_id = ?`, brokerID).Scan(&id)
 	if err == nil {
 		return id, nil
 	}
@@ -351,18 +358,24 @@ func FindOrCreateRequest(d *sql.DB, brokerID string) (int, error) {
 	return int(insertedID), nil
 }
 
-// AllBrokers returns all brokers with their contact domain for IMAP matching.
-func AllBrokers(d *sql.DB) ([]Broker, error) {
-	rows, err := d.Query(`SELECT id, name, region, method, contact, opt_out_url, notes, active FROM brokers`)
+// ListBrokersNameDomain returns all brokers with their contact domain for IMAP matching.
+func ListBrokersNameDomain(d *sql.DB) ([]BrokerNameDomain, error) {
+	rows, err := d.Query(`SELECT b.id, LOWER(b.name), LOWER(SUBSTR(b.contact, INSTR(b.contact, '@') + 1)) AS domain
+			FROM brokers b
+			WHERE b.contact LIKE '%@%'
+			AND NOT EXISTS (
+					SELECT 1 FROM requests r
+					WHERE r.broker_id = b.id AND r.status IN ('confirmed', 'no_data')
+			)`)
 	if err != nil {
 		return nil, err
 	}
 	defer func() { _ = rows.Close() }()
 
-	var result []Broker
+	var result []BrokerNameDomain
 	for rows.Next() {
-		var b Broker
-		if err := rows.Scan(&b.ID, &b.Name, &b.Region, &b.Method, &b.Contact, &b.OptOutURL, &b.Notes, &b.Active); err != nil {
+		var b BrokerNameDomain
+		if err := rows.Scan(&b.ID, &b.Name, &b.Domain); err != nil {
 			return nil, err
 		}
 		result = append(result, b)
@@ -388,30 +401,28 @@ func ShouldStartNewCycle(d *sql.DB) (bool, error) {
 	return time.Since(t) > 90*24*time.Hour, nil
 }
 
-// LatestSentRequest finds the most recent sent or needs review request for a broker.
-func LatestSentRequest(d *sql.DB, brokerID string) (int, error) {
+// RequestForBroker finds the request for a broker with a matchable status.
+func RequestForBroker(d Querier, brokerID string) (int, error) {
 	var id int
-	err := d.QueryRow(`SELECT id FROM requests WHERE broker_id = ? AND status in ('sent', 'needs_review')
-		ORDER BY sent_at DESC LIMIT 1`, brokerID).Scan(&id)
+	err := d.QueryRow(`SELECT id FROM requests WHERE broker_id = ? AND status IN ('sent', 'needs_review')`,
+		brokerID).Scan(&id)
 	return id, err
 }
 
-// LatestSentRequestByContact finds the most recent sent or needs review request for the broker
-// whose contact email matches (case-insensitive).
-func LatestSentRequestByContact(d *sql.DB, contact string) (int, error) {
+// RequestByContact finds the request for the broker whose contact email matches.
+func RequestByContact(d Querier, contact string) (int, error) {
 	var id int
-	err := d.QueryRow(`
-		SELECT r.id FROM requests r
+	err := d.QueryRow(`SELECT r.id FROM requests r
 		JOIN brokers b ON b.id = r.broker_id
-		WHERE LOWER(b.contact) = LOWER(?) AND r.status in ('sent', 'needs_review')
-		ORDER BY r.id DESC LIMIT 1`, contact).Scan(&id)
+		WHERE LOWER(b.contact) = LOWER(?) AND r.status IN ('sent', 'needs_review')`,
+		contact).Scan(&id)
 	return id, err
 }
 
 // BouncedBrokers returns brokers that have an "address not found" bounce error.
 func BouncedBrokers(d *sql.DB) ([]Broker, error) {
 	rows, err := d.Query(`
-		SELECT DISTINCT b.id, b.name FROM requests r
+		SELECT b.id, b.name FROM requests r
 		JOIN brokers b ON b.id = r.broker_id
 		WHERE r.status = 'error' AND r.notes LIKE '%address not found%'`)
 	if err != nil {

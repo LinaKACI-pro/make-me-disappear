@@ -64,7 +64,6 @@ func fetchData(d *sql.DB) (*Data, error) {
 		COALESCE(r.sent_at, '')
 		FROM brokers b
 		LEFT JOIN requests r ON r.broker_id = b.id
-			AND r.id = (SELECT MAX(r2.id) FROM requests r2 WHERE r2.broker_id = b.id)
 		WHERE b.active = 1
 		ORDER BY b.name`)
 	if err != nil {

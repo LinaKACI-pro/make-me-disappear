@@ -22,3 +22,9 @@ CREATE TABLE IF NOT EXISTS requests (
     response_raw TEXT,
     notes TEXT
 );
+
+-- One request per broker: clean up legacy duplicates and enforce uniqueness.
+DELETE FROM requests WHERE id NOT IN (
+    SELECT MAX(id) FROM requests GROUP BY broker_id
+);
+CREATE UNIQUE INDEX IF NOT EXISTS idx_requests_broker_id ON requests(broker_id);
