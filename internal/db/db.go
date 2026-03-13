@@ -406,6 +406,11 @@ func RequestForBroker(d Querier, brokerID string) (int, error) {
 	var id int
 	err := d.QueryRow(`SELECT id FROM requests WHERE broker_id = ? AND status IN ('sent', 'needs_review')`,
 		brokerID).Scan(&id)
+
+	if err == sql.ErrNoRows {
+		return id, fmt.Errorf("no request found: %w", err)
+	}
+
 	return id, err
 }
 

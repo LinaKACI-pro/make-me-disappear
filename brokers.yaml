@@ -175,6 +175,14 @@ brokers:
     opt_out_url: ""
     tier: 2
     notes: London; Information Services
+  - id: lina
+    name: lina
+    region: EU
+    method: email
+    contact: lilikci@hotmail.com
+    opt_out_url: ""
+    tier: 2
+    notes: ""
   - id: f-i-l-market-research-limited
     name: F I L Market Research Limited
     region: EU

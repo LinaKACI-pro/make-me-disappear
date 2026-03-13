@@ -47,11 +47,6 @@ func Check(ctx context.Context, cfg config.IMAP, d *sql.DB) error {
 		}
 	}
 
-	brokerNames, err := db.ListBrokersNameDomain(d)
-	if err != nil {
-		return fmt.Errorf("db.ListBrokersNameDomain: %w", err)
-	}
-
 	var total int
 	for _, folder := range folders {
 		if ctx.Err() != nil {
@@ -61,7 +56,11 @@ func Check(ctx context.Context, cfg config.IMAP, d *sql.DB) error {
 			slog.Warn("imap: skipping folder", "folder", folder)
 			continue
 		}
-		total += processFolder(ctx, c, d, criteria, brokerNames)
+		n, err := processFolder(ctx, c, d, criteria)
+		if err != nil {
+			return fmt.Errorf("imap folder %s: %w", folder, err)
+		}
+		total += n
 	}
 	slog.Info("imap: done", "processed", total)
 	return nil
@@ -95,15 +94,15 @@ type imapUpdate struct {
 	raw    string
 }
 
-func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteria, brokerNames []db.BrokerNameDomain) int {
+func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteria *imap.SearchCriteria) (int, error) {
 	searchData, err := c.UIDSearch(criteria, nil).Wait()
 	if err != nil {
-		slog.Error("imap: search failed", "err", err)
-		return 0
+		return 0, fmt.Errorf("imap search: %w", err)
 	}
+
 	uids := searchData.AllUIDs()
 	if len(uids) == 0 {
-		return 0
+		return 0, nil
 	}
 	slog.Info("imap: messages found", "count", len(uids))
 
@@ -153,6 +152,11 @@ func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteri
 	}
 	_ = fetchCmd.Close()
 
+	brokerNames, err := db.ListBrokersNameDomain(d)
+	if err != nil {
+		return 0, fmt.Errorf("db.ListBrokersNameDomain: %w", err)
+	}
+
 	// Phase 2: classify messages and collect DB updates (no DB writes yet).
 	var updates []imapUpdate
 	var bounceUpdates []imapUpdate
@@ -190,10 +194,6 @@ func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteri
 		}
 
 		reqID, err := db.RequestForBroker(d, brokerID)
-		if err == sql.ErrNoRows {
-			slog.Warn("imap: no sent request", "broker", brokerID)
-			continue
-		}
 		if err != nil {
 			slog.Error("imap: db error looking up request", "broker", brokerID, "err", err)
 			continue
@@ -217,21 +217,19 @@ func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteri
 	}
 
 	if len(updates) == 0 && len(bounceUpdates) == 0 {
-		return 0
+		return 0, nil
 	}
 
 	// Phase 3: apply all DB writes in a single transaction.
 	tx, err := d.Begin()
 	if err != nil {
-		slog.Error("imap: begin tx failed", "err", err)
-		return 0
+		return 0, fmt.Errorf("imap begin tx: %w", err)
 	}
 	defer func() { _ = tx.Rollback() }()
 
 	for _, u := range bounceUpdates {
 		if err := db.MarkError(tx, u.reqID, u.raw); err != nil {
-			slog.Error("imap: mark error failed", "err", err)
-			return 0
+			return 0, fmt.Errorf("imap mark error: %w", err)
 		}
 	}
 	for _, u := range updates {
@@ -244,14 +242,12 @@ func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteri
 			err = db.MarkNeedsReview(tx, u.reqID, u.raw)
 		}
 		if err != nil {
-			slog.Error("imap: mark failed", "status", u.status, "request", u.reqID, "err", err)
-			return 0
+			return 0, fmt.Errorf("imap mark %s: %w", u.status, err)
 		}
 	}
 
 	if err := tx.Commit(); err != nil {
-		slog.Error("imap: commit failed", "err", err)
-		return 0
+		return 0, fmt.Errorf("imap commit: %w", err)
 	}
 
 	// Phase 4: mark all handled messages as seen in one IMAP batch.
@@ -276,7 +272,7 @@ func processFolder(ctx context.Context, c *imapclient.Client, d *sql.DB, criteri
 		}
 	}
 
-	return len(updates) + len(bounceUpdates)
+	return len(updates) + len(bounceUpdates), nil
 }
 
 // isBounce returns true if the raw email body contains DSN delivery-failure markers.
