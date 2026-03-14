@@ -24,7 +24,11 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var cfgPath string
+var (
+	cfgPath     string
+	dbPath      string
+	brokersPath string
+)
 
 func main() {
 	rootCmd := &cobra.Command{
@@ -32,6 +36,8 @@ func main() {
 		Short: "GDPR personal data removal bot",
 	}
 	rootCmd.PersistentFlags().StringVar(&cfgPath, "config", "config.yaml", "path to config file")
+	rootCmd.PersistentFlags().StringVar(&dbPath, "db", "bot.db", "path to sqlite database")
+	rootCmd.PersistentFlags().StringVar(&brokersPath, "brokers", "brokers.yaml", "path to brokers YAML file")
 
 	rootCmd.AddCommand(
 		newDBSeedCmd(),
@@ -57,13 +63,13 @@ func newDBSeedCmd() *cobra.Command {
 		Aliases: []string{"db:seed"},
 		Short:   "Seed the database with broker data",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
 			defer func() { _ = d.Close() }()
 
-			n, err := db.SeedBrokers(d, "brokers.yaml")
+			n, err := db.SeedBrokers(d, brokersPath)
 			if err != nil {
 				return err
 			}
@@ -79,7 +85,7 @@ func newCampaignInitCmd() *cobra.Command {
 		Aliases: []string{"campaign:init"},
 		Short:   "Create initial requests for all active brokers",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
@@ -104,7 +110,7 @@ func newRunCmd() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("config: %w", err)
 			}
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return fmt.Errorf("database: %w", err)
 			}
@@ -301,7 +307,7 @@ func newStatusCmd() *cobra.Command {
 		Use:   "status",
 		Short: "Show global status of requests",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
@@ -344,7 +350,7 @@ func newSendCmd() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("config: %w", err)
 			}
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
@@ -390,7 +396,7 @@ func newManualListCmd() *cobra.Command {
 		Aliases: []string{"manual:list"},
 		Short:   "List brokers requiring manual action",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
@@ -421,7 +427,7 @@ func newInboxReviewCmd() *cobra.Command {
 		Aliases: []string{"inbox:review"},
 		Short:   "Review unclassified incoming emails",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
@@ -485,7 +491,7 @@ func newDashboardCmd() *cobra.Command {
 		Use:   "dashboard",
 		Short: "Generate and open HTML dashboard",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
@@ -513,7 +519,7 @@ func newIMAPCheckCmd() *cobra.Command {
 			if err != nil {
 				return fmt.Errorf("config: %w", err)
 			}
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
@@ -531,7 +537,7 @@ func newPurgeBouncedCmd() *cobra.Command {
 		Use:   "purge-bounced",
 		Short: "Remove brokers with address-not-found bounces from DB and brokers.yaml",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			d, err := db.Open("bot.db")
+			d, err := db.Open(dbPath)
 			if err != nil {
 				return err
 			}
@@ -566,7 +572,7 @@ func newPurgeBouncedCmd() *cobra.Command {
 				ids[i] = b.ID
 			}
 
-			removed, err := db.PurgeBrokersFromYAML("brokers.yaml", ids)
+			removed, err := db.PurgeBrokersFromYAML(brokersPath, ids)
 			if err != nil {
 				return fmt.Errorf("yaml: %w", err)
 			}
