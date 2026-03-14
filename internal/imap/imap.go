@@ -353,7 +353,10 @@ func collectMIMEText(e *message.Entity, sb *strings.Builder) {
 		return
 	}
 	ct, _, _ := mime.ParseMediaType(e.Header.Get("Content-Type"))
-	if ct == "" || strings.HasPrefix(strings.ToLower(ct), "text/") {
+	// Keep extraction focused on plain text parts to avoid mixing HTML noise
+	// into regex classification. If no plain text is found, decodeMIMEText
+	// falls back to ExtractBody(raw).
+	if ct == "" || strings.EqualFold(ct, "text/plain") {
 		b, _ := io.ReadAll(e.Body)
 		sb.Write(b)
 		sb.WriteByte('\n')
